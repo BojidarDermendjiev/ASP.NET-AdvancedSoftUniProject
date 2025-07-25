@@ -47,7 +47,6 @@
     <Folder Include="Application\Utilities\" />
     <Folder Include="Application\UseCases\" />
     <Folder Include="Application\Services\" />
-    <Folder Include="Domain\Entities\" />
     <Folder Include="Domain\Enums\" />
     <Folder Include="Domain\ValueObjects\" />
     <Folder Include="Infrastructure\Data\Migrations\" />
