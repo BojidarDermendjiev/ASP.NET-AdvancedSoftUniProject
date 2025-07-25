@@ -1,12 +1,33 @@
 ﻿namespace ServerAspNetCoreAPIMakePC.Domain.Entities
 {
+    using Microsoft.EntityFrameworkCore;
+    using System.ComponentModel.DataAnnotations;
+
     public class BasketItem
     {
+      
+        [Required]
+        [Comment("Unique identifier for the basket item.")]
         public int Id { get; set; }
+
+        [Required]
+        [Comment("Foreign key referencing the associated basket.")]
         public int BasketId { get; set; }
+
+        [Required]
+        [Comment("Navigation property referencing the associated basket entity.")]
         public  Basket Basket { get; set; } = null!;
+
+        [Required]
+        [Comment("Foreign key referencing the associated product.")]
         public int ProductId { get; set; }
-        public  Product Product { get; set; } = null!;
+
+        [Required]
+        [Comment("Navigation property referencing the associated product entity.")]
+        public Product Product { get; set; } = null!;
+
+        [Required]
+        [Comment("The number of units of the product in the basket.")]
         public int Quantity { get; set; }
     }
 }
