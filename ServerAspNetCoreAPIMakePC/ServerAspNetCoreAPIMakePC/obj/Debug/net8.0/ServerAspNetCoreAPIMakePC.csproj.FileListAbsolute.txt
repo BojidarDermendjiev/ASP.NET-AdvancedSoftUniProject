@@ -309,3 +309,4 @@ C:\ASP.NET\ASP.NET-AdvancedSoftUniProject\ServerAspNetCoreAPIMakePC\ServerAspNet
 C:\ASP.NET\ASP.NET-AdvancedSoftUniProject\ServerAspNetCoreAPIMakePC\ServerAspNetCoreAPIMakePC\obj\Debug\net8.0\ServerAspNetCoreAPIMakePC.pdb
 C:\ASP.NET\ASP.NET-AdvancedSoftUniProject\ServerAspNetCoreAPIMakePC\ServerAspNetCoreAPIMakePC\obj\Debug\net8.0\ServerAspNetCoreAPIMakePC.genruntimeconfig.cache
 C:\ASP.NET\ASP.NET-AdvancedSoftUniProject\ServerAspNetCoreAPIMakePC\ServerAspNetCoreAPIMakePC\obj\Debug\net8.0\ref\ServerAspNetCoreAPIMakePC.dll
+C:\ASP.NET\ASP.NET-AdvancedSoftUniProject\ServerAspNetCoreAPIMakePC\ServerAspNetCoreAPIMakePC\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

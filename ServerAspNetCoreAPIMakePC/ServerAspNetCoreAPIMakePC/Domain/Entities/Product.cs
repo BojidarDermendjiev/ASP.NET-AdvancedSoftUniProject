@@ -11,8 +11,8 @@
         public string Description { get; set; } = null!;
         public string Specs { get; set; } = null!;
         public string ImageUrl { get; set; } = null!;
-        public Guid CategoryId { get; set; }
+        public int CategoryId { get; set; }
         public Category Category { get; set; } = null!;
-        public virtual ICollection<Review> Reviews { get; set; } = null!;
+        public  ICollection<Review> Reviews { get; set; } = new List<Review>();
     }
 }

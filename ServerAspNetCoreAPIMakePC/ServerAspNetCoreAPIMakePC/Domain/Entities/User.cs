@@ -9,7 +9,7 @@
         public string FullName { get; set; } = null!;
         public string Role { get; set; } = null!;
         public ShoppingCart ShoppingCart { get; set; } = null!;
-        public virtual ICollection<Order> Orders { get; set; } = null!;
-        public virtual ICollection<Review> Reviews { get; set; } = null!;
+        public  ICollection<Order> Orders { get; set; } = new List<Order>();
+        public  ICollection<Review> Reviews { get; set; } = new List<Review>();
     }
 }
