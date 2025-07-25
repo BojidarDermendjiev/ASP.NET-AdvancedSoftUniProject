@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36221.1 d17.14
+VisualStudioVersion = 17.14.36221.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerAspNetCoreAPIMakePC", "ServerAspNetCoreAPIMakePC\ServerAspNetCoreAPIMakePC.csproj", "{6F34BE76-4330-4E39-9B9F-47CD94465DD8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerAspNetCoreAPIMakePC.Tests", "ServerAspNetCoreAPIMakePC.Tests\ServerAspNetCoreAPIMakePC.Tests.csproj", "{ECFBA819-B78F-4E45-B8A7-1C67AF724B93}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{6F34BE76-4330-4E39-9B9F-47CD94465DD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F34BE76-4330-4E39-9B9F-47CD94465DD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F34BE76-4330-4E39-9B9F-47CD94465DD8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECFBA819-B78F-4E45-B8A7-1C67AF724B93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECFBA819-B78F-4E45-B8A7-1C67AF724B93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECFBA819-B78F-4E45-B8A7-1C67AF724B93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECFBA819-B78F-4E45-B8A7-1C67AF724B93}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
