@@ -6,7 +6,7 @@
         public const string InvalidPassword = "Password must have at least 1 uppercase, 1 lowercase, 1 number, and 1 special character.";
         public const string InvalidEmail = "Email is required.";
         public const string InvalidMatchingPassword = "The password and confirmation password do not match.";
-        public const string InvalidUsername = "Username must be between 3 and 50 characters and can only contain letters, numbers, and underscores.";
+        public const string InvalidUserName = "Username must be between 3 and 50 characters and can only contain letters, numbers, and underscores.";
         public const string InvalidUserRole = "User role must be between 3 and 30 characters and can only contain letters, numbers, and underscores.";
 
         // Brand-related error messages
@@ -28,6 +28,7 @@
         public const string InvalidProductDescription = "Product description must be between 50 and 1000 characters.";
         public const string InvalidProductSpecs = "Product specifications must be between 10 and 500 characters.";
         public const string InvalidProductStock = "Product stock must be a non-negative integer.";
+        public const string InvalidProductPrice = "Price must be positive.";
 
         // Review-related error messages
         public const string InvalidReviewComment = "Review comment must be between 50 and 1000 characters.";

@@ -23,7 +23,7 @@
         public User User { get; set; } = null!;
 
         [Comment("Identifier for the product being reviewed.")]
-        public int? ProductId { get; set; }
+        public Guid? ProductId { get; set; }
 
         [Comment("Navigation property to the product being reviewed.")]
         [ForeignKey(nameof(ProductId))]

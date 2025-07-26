@@ -20,7 +20,7 @@
 
         [Required]
         [Comment("Foreign key referencing the associated product.")]
-        public int ProductId { get; set; }
+        public Guid ProductId { get; set; }
 
         [Required]
         [Comment("Navigation property referencing the associated product entity.")]

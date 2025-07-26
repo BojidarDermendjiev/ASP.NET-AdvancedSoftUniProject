@@ -47,19 +47,13 @@
     <Folder Include="API\Middleware\" />
     <Folder Include="API\ModelBinders\" />
     <Folder Include="API\Properties\" />
-    <Folder Include="Application\DTOs\" />
-    <Folder Include="Application\Interfaces\" />
-    <Folder Include="Application\Utilities\" />
     <Folder Include="Application\UseCases\" />
-    <Folder Include="Application\Services\" />
     <Folder Include="Domain\Enums\" />
     <Folder Include="Domain\ValueObjects\" />
-    <Folder Include="Infrastructure\Data\Migrations\" />
     <Folder Include="Infrastructure\Data\DbSeed\" />
     <Folder Include="Infrastructure\External\" />
     <Folder Include="Infrastructure\Models\" />
     <Folder Include="Infrastructure\Services\" />
-    <Folder Include="Infrastructure\Repositories\" />
   </ItemGroup>
 
 </Project>

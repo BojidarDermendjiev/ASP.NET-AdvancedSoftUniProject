@@ -30,8 +30,12 @@
         public string ConfirmPassword { get; set; } = null!;
 
         [Required]
+        [Comment("Salt used for hashing the user's password.")]
+        public string PasswordSalt { get; set; } = null!;
+
+        [Required]
         [Comment("Full name of the user.")]
-        [StringLength(UserFullNameMaxLength, MinimumLength = UserFullNameMinLength , ErrorMessage = InvalidUsername)]
+        [StringLength(UserFullNameMaxLength, MinimumLength = UserFullNameMinLength , ErrorMessage = InvalidUserName)]
         public string FullName { get; set; } = null!;
 
         [Required]

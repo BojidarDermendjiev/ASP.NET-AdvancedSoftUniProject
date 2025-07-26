@@ -9,7 +9,7 @@
         [HttpGet("set")]
         public IActionResult SetCookie()
         {
-            var cookieOptions = new CookieOptions
+            var cookieOptions = new CookieOptions   
             {
                 Expires = DateTimeOffset.UtcNow.AddDays(1),
                 HttpOnly = true,

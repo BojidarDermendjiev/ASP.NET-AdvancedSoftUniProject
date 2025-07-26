@@ -12,5 +12,7 @@
         public const int ProductSpecsMaxLength = 2000;
         public const int ProductStockMinValue = 10;
         public const int ProductStockMaxValue = 500;
+        public const double ProductPriceMinValue = 0.01;
+        public const double ProductPriceMaxValue = double.MaxValue;
     }
 }

@@ -1,9 +1,9 @@
-﻿
-using ServerAspNetCoreAPIMakePC.Domain.Entities;
-
-namespace ServerAspNetCoreAPIMakePC.Infrastructure.Data
+﻿namespace ServerAspNetCoreAPIMakePC.Infrastructure.Data
 {
     using Microsoft.EntityFrameworkCore;
+
+    using Domain.Entities;
+
     public class MakePCDbContext : DbContext
     {
         public MakePCDbContext(DbContextOptions<MakePCDbContext> options) : base(options) { }
@@ -22,8 +22,22 @@ namespace ServerAspNetCoreAPIMakePC.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Order
+            modelBuilder.Entity<Order>()
+                .Property(o => o.TotalPrice)
+                .HasColumnType("decimal(18,4)"); 
+
+            // OrderItem
+            modelBuilder.Entity<OrderItem>()
+                .Property(oi => oi.UnitPrice)
+                .HasColumnType("decimal(18,4)");
+
+            // Product
+            modelBuilder.Entity<Product>()
+                .Property(p => p.Price)
+                .HasColumnType("decimal(18,4)");
+
             base.OnModelCreating(modelBuilder);
-            // You can configure relationships or property constraints here if needed
         }
     }
 }
