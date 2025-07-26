@@ -31,7 +31,7 @@
 
         [Required]
         [Comment("Salt used for hashing the user's password.")]
-        public string PasswordSalt { get; set; } = null!;
+        public byte[] PasswordSalt { get; set; } = null!;
 
         [Required]
         [Comment("Full name of the user.")]

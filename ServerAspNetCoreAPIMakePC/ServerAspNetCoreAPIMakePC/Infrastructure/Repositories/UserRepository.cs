@@ -1,32 +1,56 @@
 ﻿namespace ServerAspNetCoreAPIMakePC.Infrastructure.Repositories
 {
+    using Microsoft.EntityFrameworkCore;
+
+    using Data;
     using Domain.Entities;
     using Domain.Interfaces;
+    using static Domain.ErrorMessages.ErrorMessages;
+
     public class UserRepository : IUserRepository
     {
-        public Task AddAsync(User user)
+        private readonly MakePCDbContext _context;
+
+        public UserRepository(MakePCDbContext context)
+            => this._context = context;
+
+        public async Task AddAsync(User user)
         {
-            throw new NotImplementedException();
+            await this._context.Users.AddAsync(user);
+            await this._context.SaveChangesAsync();
         }
 
-        public Task<User?> GetByEmailAsync(string email)
+        public async Task<User?> GetByEmailAsync(string email)
         {
-            throw new NotImplementedException();
+            return await this._context.Users
+                .FirstOrDefaultAsync(u => u.Email == email);
         }
 
-        public Task<User?> GetByIdAsync(Guid id)
+        public async Task<User?> GetByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await this._context.Users
+                .FirstOrDefaultAsync(u => u.Id == id);
         }
 
         public Task UpdateAsync(User user)
         {
-            throw new NotImplementedException();
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user), InvalidUserType);
+            }
+            this._context.Users.Update(user);
+            return this._context.SaveChangesAsync();
         }
 
         public Task DeleteAsync(Guid id)
         {
-            throw new NotImplementedException();
+          var user = this._context.Users.Find(id);
+            if (user == null)
+            {
+                throw new KeyNotFoundException(string.Format(UserNotFoundById, id));
+            }
+            this._context.Users.Remove(user);
+            return this._context.SaveChangesAsync();
         }
     }
 }

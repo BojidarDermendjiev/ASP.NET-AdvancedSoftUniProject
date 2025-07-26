@@ -7,7 +7,8 @@
     using Utilities;
     using Domain.Entities;
     using Domain.Interfaces;
-    
+    using static Domain.ErrorMessages.ErrorMessages;
+
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
@@ -20,10 +21,28 @@
         }   
         public async Task RegisterUserAsync(RegisterUserDto dto)
         {
+            var existingUser = await this._userRepository.GetByEmailAsync(dto.Email);
+            if (existingUser != null)
+            {
+                throw new InvalidOperationException(string.Format(UserExistingEmailAddress, dto.Email));
+            }
+            if (dto.Password != dto.ConfirmPassword)
+            {
+                throw new InvalidOperationException(InvalidMatchingPassword);
+            }
+            if (string.IsNullOrWhiteSpace(dto.Password) || string.IsNullOrWhiteSpace(dto.ConfirmPassword))
+            {
+                throw new ArgumentException("Password and Confirm Password cannot be empty.");
+            }
+
             byte[] passwordSalt;
             string passwordHash = PasswordHasher.HashPassword(dto.Password, out passwordSalt);
+
             var user = _mapper.Map<User>(dto);
-            await this._userRepository.AddAsync(user);
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
+
+            await _userRepository.AddAsync(user);
         }
 
         public Task<UserDto?> AuthenticateUserAsync(string email, string password)
