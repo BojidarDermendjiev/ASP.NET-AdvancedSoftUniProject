@@ -1,5 +1,9 @@
+
 namespace ServerAspNetCoreAPIMakePC.API
 {
+    using Microsoft.EntityFrameworkCore;
+
+    using Infrastructure.Data;
     public class StartUp
     {
         public static void Main(string[] args)
@@ -8,8 +12,11 @@ namespace ServerAspNetCoreAPIMakePC.API
 
             builder.Services.AddControllers();
 
+            builder.Services.AddDbContext<MakePCDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
             builder.Services.AddEndpointsApiExplorer();
-            
+
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();

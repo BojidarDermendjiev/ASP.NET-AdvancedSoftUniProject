@@ -48,5 +48,8 @@
 
         [Comment("Collection of reviews written by the user.")]
         public ICollection<Review> Reviews { get; set; } = new List<Review>();
+
+        [Comment("Collection of platform feedback provided by the user.")]
+        public ICollection<PlatformFeedback> PlatformFeedbacks { get; set; } = new List<PlatformFeedback>();
     }
 }

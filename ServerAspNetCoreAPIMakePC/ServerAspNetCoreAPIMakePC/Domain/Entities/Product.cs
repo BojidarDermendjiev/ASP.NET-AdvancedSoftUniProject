@@ -25,8 +25,7 @@
 
         [Required]
         [Comment("Brand of the product.")]
-        [StringLength(ProductBrandMaxLength, MinimumLength = ProductBrandMinLength, ErrorMessage = InvalidProductBrand)]
-        public string Brand { get; set; } = null!;
+        public Brand Brand { get; set; } = null!;
 
         [Required]
         [Comment("Price of the product.")]

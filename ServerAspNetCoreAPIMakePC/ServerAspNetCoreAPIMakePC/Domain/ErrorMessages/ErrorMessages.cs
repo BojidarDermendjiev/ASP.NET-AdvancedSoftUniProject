@@ -28,10 +28,13 @@
         public const string InvalidProductDescription = "Product description must be between 50 and 1000 characters.";
         public const string InvalidProductSpecs = "Product specifications must be between 10 and 500 characters.";
         public const string InvalidProductStock = "Product stock must be a non-negative integer.";
-        public const string InvalidProductBrand = "Product brand must be a valid brand ID.";
 
         // Review-related error messages
         public const string InvalidReviewComment = "Review comment must be between 50 and 1000 characters.";
         public const string InvalidReviewRating = "Review rating must be between 1 and 5.";
+
+        // Feedback-related error messages
+        public const string InvalidFeedbackComment = "Feedback comment must be between 10 and 1000 characters.";
+        public const string InvalidFeedbackRating = "Feedback rating must be between 1 and 5.";
     }
 }
