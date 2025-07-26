@@ -1,5 +1,4 @@
-﻿
-namespace ServerAspNetCoreAPIMakePC.Domain.Entities
+﻿namespace ServerAspNetCoreAPIMakePC.Domain.Entities
 {
     using Microsoft.EntityFrameworkCore;
     using System.ComponentModel.DataAnnotations;

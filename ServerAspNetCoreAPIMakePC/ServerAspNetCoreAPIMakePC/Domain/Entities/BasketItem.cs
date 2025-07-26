@@ -2,6 +2,7 @@
 {
     using Microsoft.EntityFrameworkCore;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public class BasketItem
     {
@@ -16,6 +17,7 @@
 
         [Required]
         [Comment("Navigation property referencing the associated basket entity.")]
+        [ForeignKey(nameof(BasketId))]
         public  Basket Basket { get; set; } = null!;
 
         [Required]
@@ -24,6 +26,7 @@
 
         [Required]
         [Comment("Navigation property referencing the associated product entity.")]
+        [ForeignKey(nameof(ProductId))]
         public Product Product { get; set; } = null!;
 
         [Required]

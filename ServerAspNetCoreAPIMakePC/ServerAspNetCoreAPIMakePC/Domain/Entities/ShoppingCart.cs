@@ -2,6 +2,8 @@
 {
     using Microsoft.EntityFrameworkCore;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+
     public class ShoppingCart
     {
         [Required]
@@ -14,6 +16,7 @@
 
         [Required]
         [Comment("Navigation property to the user associated with the shopping cart.")]
+        [ForeignKey(nameof(UserId))]
         public User User { get; set; } = null!;
 
         [Required]

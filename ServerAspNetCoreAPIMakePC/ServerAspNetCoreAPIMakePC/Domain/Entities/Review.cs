@@ -38,6 +38,9 @@
         [Comment("Text content of the review.")]
         [StringLength(ReviewCommentMaxLength, MinimumLength = ReviewCommentMinLength, ErrorMessage = InvalidReviewComment)]
         public string Comment { get; set; } = null!;
+
+        [Required]
+        [Comment("The date and time when the review was created.")]
         public DateTime Date { get; set; }
     }
 }
