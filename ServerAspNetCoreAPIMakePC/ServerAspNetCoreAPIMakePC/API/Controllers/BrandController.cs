@@ -1,4 +1,4 @@
-﻿namespace ServerAspNetCoreAPIMakePC.Application.Services
+﻿namespace ServerAspNetCoreAPIMakePC.API.Controllers
 {
     public class BrandController
     {

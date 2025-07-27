@@ -32,25 +32,25 @@
                 .FirstOrDefaultAsync(u => u.Id == id);
         }
 
-        public Task UpdateAsync(User user)
+        public async Task UpdateAsync(User user)
         {
             if (user == null)
             {
                 throw new ArgumentNullException(nameof(user), InvalidUserType);
             }
             this._context.Users.Update(user);
-            return this._context.SaveChangesAsync();
+            await this._context.SaveChangesAsync();
         }
 
-        public Task DeleteAsync(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
-          var user = this._context.Users.Find(id);
+            var user = this._context.Users.Find(id);
             if (user == null)
             {
                 throw new KeyNotFoundException(string.Format(UserNotFoundById, id));
             }
             this._context.Users.Remove(user);
-            return this._context.SaveChangesAsync();
+            await this._context.SaveChangesAsync();
         }
     }
 }

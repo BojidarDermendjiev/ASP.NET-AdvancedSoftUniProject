@@ -6,11 +6,12 @@
         public const string InvalidPassword = "Password must have at least 1 uppercase, 1 lowercase, 1 number, and 1 special character.";
         public const string InvalidEmail = "Email is required.";
         public const string InvalidMatchingPassword = "The password and confirmation password do not match.";
-        public const string InvalidUserName = "Username must be between 3 and 50 characters and can only contain letters, numbers, and underscores.";
+        public const string InvalidUserName = "Username must be between 2 and 100 characters and can only contain letters, numbers, and underscores.";
         public const string InvalidUserRole = "User role must be between 3 and 30 characters and can only contain letters, numbers, and underscores.";
         public const string InvalidUserType = "User cannot be null";
         public const string UserNotFoundById = "User with ID {0} not found.";
         public const string UserExistingEmailAddress = "User with email {0} already exists";
+        public const string EmptyUserPassword = "Password and Confirm Password cannot be empty.";
 
         // Brand-related error messages
         public const string InvalidBrandName = "Brand name must be between 2 and 100 characters.";
