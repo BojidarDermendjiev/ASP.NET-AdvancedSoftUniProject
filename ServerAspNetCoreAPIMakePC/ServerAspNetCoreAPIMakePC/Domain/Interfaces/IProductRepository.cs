@@ -10,5 +10,6 @@
         Task AddAsync(Product product);
         Task UpdateAsync(Product product);
         Task DeleteAsync(Guid id);
+        Task<IEnumerable<Product>> SearchAsync(string query);
     }
 }

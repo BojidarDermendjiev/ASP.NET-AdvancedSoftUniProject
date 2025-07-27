@@ -53,5 +53,12 @@
                 await this._context.SaveChangesAsync();
             }
         }
+
+        public async Task<IEnumerable<Product>> SearchAsync(string query)
+        {
+            return await this._context.Products
+                .Where(p => p.Name.Contains(query) || p.Description.Contains(query))
+                .ToListAsync();
+        }
     }
 }

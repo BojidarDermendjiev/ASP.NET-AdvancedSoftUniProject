@@ -51,12 +51,13 @@
         public async Task<UserDto?> AuthenticateUserAsync(string email, string password)
         {
             var user = await this._userRepository.GetByEmailAsync(email);
-            if (user == null)
+            if (user is null)
             {
                 return null;
             }
 
             bool verified = PasswordHasher.VerifyPassword(password, user.PasswordHash, user.PasswordSalt);
+
             if (!verified)
             {
                 return null;
@@ -68,19 +69,19 @@
         public async Task<UserDto?> GetUserByIdAsync(Guid userId)
         {
             var user = await _userRepository.GetByIdAsync(userId);
-            return user == null ? null : _mapper.Map<UserDto>(user);
+            return user is null ? null : _mapper.Map<UserDto>(user);
         }
 
         public async Task<UserDto?> GetUserByEmailAsync(string email)
         {
             var user = await _userRepository.GetByEmailAsync(email);
-            return user == null ? null : _mapper.Map<UserDto>(user);
+            return user is null ? null : _mapper.Map<UserDto>(user);
         }
 
         public async Task UpdateUserAsync(Guid userId, UpdateUserDto dto)
         {
             var user = await _userRepository.GetByIdAsync(userId);
-            if (user == null)
+            if (user is null)
             {
                 throw new InvalidOperationException(string.Format(UserNotFoundById, userId));
             }
@@ -110,8 +111,10 @@
         public async Task ChangePasswordAsync(Guid id, string newPassword)
         {
             var user = await _userRepository.GetByIdAsync(id);
-            if (user == null)
+            if (user is null)
+            {
                 throw new KeyNotFoundException(string.Format(UserNotFoundById, id));
+            }
 
             byte[] passwordSalt;
             string passwordHash = PasswordHasher.HashPassword(newPassword, out passwordSalt);

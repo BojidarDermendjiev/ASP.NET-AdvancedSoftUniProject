@@ -12,5 +12,6 @@
         Task DeleteProductAsync(Guid id);
         Task<IEnumerable<Product>> GetAllProductsAsync();
         Task<bool> ProductExistsAsync(string name);
+        Task<IEnumerable<Product>> SearchProductsAsync(string query);
     }
 }

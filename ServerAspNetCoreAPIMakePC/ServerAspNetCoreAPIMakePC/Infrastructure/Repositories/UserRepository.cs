@@ -34,7 +34,7 @@
 
         public async Task UpdateAsync(User user)
         {
-            if (user == null)
+            if (user is null)
             {
                 throw new ArgumentNullException(nameof(user), InvalidUserType);
             }
@@ -44,8 +44,8 @@
 
         public async Task DeleteAsync(Guid id)
         {
-            var user = this._context.Users.Find(id);
-            if (user == null)
+            var user = await this._context.Users.FindAsync(id);
+            if (user is null)
             {
                 throw new KeyNotFoundException(string.Format(UserNotFoundById, id));
             }

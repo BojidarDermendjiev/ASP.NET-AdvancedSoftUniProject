@@ -33,6 +33,10 @@
         public const string InvalidProductSpecs = "Product specifications must be between 10 and 500 characters.";
         public const string InvalidProductStock = "Product stock must be a non-negative integer.";
         public const string InvalidProductPrice = "Price must be positive.";
+        public const string AlreadyExistingProduct = "$Product with name '{0}' already exists.";
+        public const string ProductNotFound = "Product not found.";
+        public const string InvalidProductImageURL = "ImageUrl must be a valid URL.";
+        public const string InvalidProductBrand = "Product brand must be a valid brand and cannot be empty.";
 
         // Review-related error messages
         public const string InvalidReviewComment = "Review comment must be between 50 and 1000 characters.";

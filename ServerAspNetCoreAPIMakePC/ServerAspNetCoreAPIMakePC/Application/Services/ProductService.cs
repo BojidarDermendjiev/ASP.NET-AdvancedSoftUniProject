@@ -6,6 +6,7 @@
     using Interfaces;
     using Domain.Entities;
     using Domain.Interfaces;
+    using static Domain.ErrorMessages.ErrorMessages;
 
 
     public class ProductService : IProductService
@@ -22,49 +23,89 @@
         /// <summary>
         /// Get a product by its unique identifier.
         /// </summary>
-        public Task<Product?> GetProductByIdAsync(Guid id)
+        public async Task<Product?> GetProductByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await this._productRepository.GetByIdAsync(id);
         }
 
         /// <summary>
         /// Create a new product from the given DTO.
         /// </summary>
-        public Task<Product> CreateProductAsync(CreateProductDto dto)
+        public async Task<Product> CreateProductAsync(CreateProductDto dto)
         {
-            throw new NotImplementedException();
+            var existing = await this._productRepository.GetByNameAsync(dto.Name);
+            if (existing != null)
+            {
+                throw new InvalidOperationException(string.Format(AlreadyExistingProduct, dto.Name));
+            }
+            var product = this._mapper.Map<Product>(dto);
+            product.Id = Guid.NewGuid();
+            await this._productRepository.AddAsync(product);
+            return product;
+
         }
 
         /// <summary>
         /// Update an existing product.
         /// </summary>
-        public Task<Product?> UpdateProductAsync(Guid id, UpdateProductDto dto)
+        public async Task<Product?> UpdateProductAsync(Guid id, UpdateProductDto dto)
         {
-            throw new NotImplementedException();
+            var product = await this._productRepository.GetByIdAsync(id);
+            if (product is null)
+            {
+                throw new KeyNotFoundException(string.Format(ProductNotFound));
+            }
+
+            if (!string.IsNullOrWhiteSpace(dto.Name) && dto.Name != product.Name)
+            {
+                var existing = await this._productRepository.GetByNameAsync(dto.Name);
+                if (existing != null && existing.Id != id)
+                {
+                    throw new InvalidOperationException(string.Format(AlreadyExistingProduct, dto.Name));
+                }
+            }
+
+            this._mapper.Map(dto, product);
+            await this._productRepository.UpdateAsync(product);
+            return product;
         }
 
         /// <summary>
         /// Delete a product by its ID.
         /// </summary>
-        public Task DeleteProductAsync(Guid id)
+        public async Task DeleteProductAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var product = await this._productRepository.GetByIdAsync(id);
+            if (product is null)
+            {
+                throw new KeyNotFoundException(string.Format(ProductNotFound));
+            }
+            await this._productRepository.DeleteAsync(id);
         }
 
         /// <summary>
         /// Get all products.
         /// </summary>
-        public Task<IEnumerable<Product>> GetAllProductsAsync()
+        public async Task<IEnumerable<Product>> GetAllProductsAsync()
         {
-            throw new NotImplementedException();
+            return await this._productRepository.GetAllAsync();
         }
 
         /// <summary>
         /// Check if a product exists by name.
         /// </summary>
-        public Task<bool> ProductExistsAsync(string name)
+        public async Task<bool> ProductExistsAsync(string name)
         {
-            throw new NotImplementedException();
+            var product = await this._productRepository.GetByNameAsync(name);
+            return product != null;
+        }
+
+        /// <summary>
+        /// Searches for products that match the specified query string.
+        /// </summary>
+        public async Task<IEnumerable<Product>> SearchProductsAsync(string query)
+        {
+            return await _productRepository.SearchAsync(query);
         }
     }
 }
