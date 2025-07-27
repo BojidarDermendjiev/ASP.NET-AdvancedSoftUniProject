@@ -1,10 +1,10 @@
 namespace ServerAspNetCoreAPIMakePC.API
 {
-    using Infrastructure.Data;
-    using Application.Mappings;
     using Microsoft.EntityFrameworkCore;
 
     using Domain.Interfaces;
+    using Infrastructure.Data;
+    using Application.Mappings;
     using Application.Services;
     using Application.Interfaces;
     using Infrastructure.Repositories;
@@ -22,6 +22,8 @@ namespace ServerAspNetCoreAPIMakePC.API
 
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<IProductService, ProductService>();
+            builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
             builder.Services.AddEndpointsApiExplorer();
 

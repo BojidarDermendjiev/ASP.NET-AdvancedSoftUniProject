@@ -10,6 +10,7 @@
     {
         public UserProfile()
         {
+            CreateMap<User, UserDto>();
             CreateMap<RegisterUserDto, User>()
                 .ForMember(dest => dest.PasswordHash, opt => opt.Ignore())
                 .ForMember(dest => dest.PasswordSalt, opt => opt.Ignore())
@@ -18,8 +19,10 @@
                 {
                     byte[] salt;
                     dest.PasswordHash = PasswordHasher.HashPassword(src.Password, out salt);
-                    dest.PasswordSalt = Convert.ToHexString(salt);
+                    dest.PasswordSalt = salt;
                 });
+            CreateMap<UpdateUserDto, User>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
         }
     }
 }

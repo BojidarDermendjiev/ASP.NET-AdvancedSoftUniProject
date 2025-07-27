@@ -4,6 +4,8 @@
     {
         public const int ProductNameMinLength = 2;
         public const int ProductNameMaxLength = 100;
+        public const int ProductBrandNameMinLength = 2;
+        public const int ProductBrandNameMaxLength = 50;
         public const int ProductTypeMinLength = 2;
         public const int ProductTypeMaxLength = 50;
         public const int ProductDescriptionMinLength = 50;

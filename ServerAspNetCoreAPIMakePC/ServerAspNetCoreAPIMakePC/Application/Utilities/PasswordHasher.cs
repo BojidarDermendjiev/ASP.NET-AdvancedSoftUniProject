@@ -22,5 +22,22 @@
 
             return Convert.ToHexString(hash);
         }
+
+        public static bool VerifyPassword(string password, string storedHash, byte[] storedSalt)
+        {
+            var hashToCompare = Rfc2898DeriveBytes.Pbkdf2(
+                Encoding.UTF8.GetBytes(password),
+                storedSalt,
+                Iterations,
+                HashAlgorithm,
+                KeySize);
+
+            var hashToCompareString = Convert.ToHexString(hashToCompare);
+
+            return CryptographicOperations.FixedTimeEquals(
+                Encoding.UTF8.GetBytes(storedHash),
+                Encoding.UTF8.GetBytes(hashToCompareString)
+            );
+        }
     }
 }
