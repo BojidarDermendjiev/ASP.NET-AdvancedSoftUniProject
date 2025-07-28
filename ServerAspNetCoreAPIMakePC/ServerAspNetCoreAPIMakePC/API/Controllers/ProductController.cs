@@ -3,17 +3,19 @@
     using Microsoft.AspNetCore.Mvc;
 
     using Domain.Entities;
-    using Application.DTOs;
     using Application.Interfaces;
-    using ServerAspNetCoreAPIMakePC.Application.DTOs.Product;
+    using Application.DTOs.Product;
 
     [ApiController]
     [Route("api/[controller]")]
     public class ProductController : ControllerBase
     {
         private readonly IProductService  _productService;
+
         public ProductController(IProductService productService)
-            =>  this._productService = productService;
+        {
+            this._productService = productService;
+        }
 
         /// <summary>
         /// Gets all products.

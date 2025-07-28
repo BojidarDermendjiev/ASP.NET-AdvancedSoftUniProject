@@ -2,16 +2,17 @@
 {
     using Microsoft.AspNetCore.Mvc;
 
-    using Application.DTOs;
+    using Application.DTOs.User;
     using Application.Interfaces;
     using static Domain.ErrorMessages.ErrorMessages;
-    using ServerAspNetCoreAPIMakePC.Application.DTOs.User;
 
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
         public UserController(IUserService userService)
-            => this._userService = userService;
+        {
+            this._userService = userService;
+        }
 
         /// <summary>
         /// Registers a new user.
