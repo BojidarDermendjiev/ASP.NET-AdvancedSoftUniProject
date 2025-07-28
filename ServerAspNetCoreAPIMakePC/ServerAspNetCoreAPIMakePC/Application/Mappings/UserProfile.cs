@@ -2,16 +2,18 @@
 {
     using AutoMapper;
     
-    using DTOs;
     using Utilities;
+    using DTOs.User;
     using Domain.Entities;
-    using ServerAspNetCoreAPIMakePC.Application.DTOs.User;
+    using DTOs.ShoppingCart;
+
 
     public class UserProfile : Profile
     {
         public UserProfile()
         {
             CreateMap<User, UserDto>();
+            
             CreateMap<RegisterUserDto, User>()
                 .ForMember(dest => dest.PasswordHash, opt => opt.Ignore())
                 .ForMember(dest => dest.PasswordSalt, opt => opt.Ignore())
@@ -22,8 +24,30 @@
                     dest.PasswordHash = PasswordHasher.HashPassword(src.Password, out salt);
                     dest.PasswordSalt = salt;
                 });
+
             CreateMap<UpdateUserDto, User>()
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+            
+            CreateMap<BasketItem, BasketItem>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore());
+            
+            CreateMap<AddBasketItemDto, ShoppingCart>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(_ => Guid.NewGuid()))
+                .ForMember(dest => dest.DateCreated, opt => opt.MapFrom(_ => DateTime.UtcNow))
+                .ForMember(dest => dest.Items, opt => opt.MapFrom(src => new List<BasketItem>
+                {
+                    new BasketItem
+                    {
+                        ProductId = src.ProductId,
+                        Quantity = src.Quantity
+                    }
+                }));
+           
+            CreateMap<AddBasketItemDto, BasketItem>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.Basket, opt => opt.Ignore()) 
+                .ForMember(dest => dest.BasketId, opt => opt.Ignore()) 
+                .ForMember(dest => dest.Product, opt => opt.Ignore()); 
         }
     }
 }

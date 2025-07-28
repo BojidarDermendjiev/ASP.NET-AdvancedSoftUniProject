@@ -5,6 +5,6 @@
         public Guid Id { get; set; }
         public Guid UserId { get; set; }
         public DateTime DateCreated { get; set; }
-        public ICollection<BasketItemDto> Items { get; set; }
+        public ICollection<BasketItemDto> Items { get; set; } = new List<BasketItemDto>();
     }
 }

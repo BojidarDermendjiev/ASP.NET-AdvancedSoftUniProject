@@ -1,4 +1,7 @@
-﻿namespace ServerAspNetCoreAPIMakePC.Domain.ErrorMessages
+﻿using NUnit.Framework;
+using ServerAspNetCoreAPIMakePC.Domain.Entities;
+
+namespace ServerAspNetCoreAPIMakePC.Domain.ErrorMessages
 {
     public class ErrorMessages
     {
@@ -39,7 +42,9 @@
         public const string ProductNotFound = "Product not found.";
         public const string InvalidProductImageURL = "ImageUrl must be a valid URL.";
         public const string InvalidProductBrand = "Product brand must be a valid brand and cannot be empty.";
-
+        public const string ProductNotExist = "Product does not exist.";
+        public const string ShoppingNotFound = "Shopping cart not found for user.";
+        
         // Review-related error messages
         public const string InvalidReviewComment = "Review comment must be between 50 and 1000 characters.";
         public const string InvalidReviewRating = "Review rating must be between 1 and 5.";
