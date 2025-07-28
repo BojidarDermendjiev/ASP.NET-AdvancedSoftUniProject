@@ -60,5 +60,17 @@
                 .Where(p => p.Name.Contains(query) || p.Description.Contains(query))
                 .ToListAsync();
         }
+
+        public async Task<(IEnumerable<Product> products, int totalCount)> GetPagesAsync(int pageNumber, int pageSize)
+        {
+            var query = _context.Products.AsQueryable();
+            var totalCount = await query.CountAsync();
+            var products = await query
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return (products, totalCount);
+        }
     }
 }

@@ -105,5 +105,23 @@
             var results = await _productService.SearchProductsAsync(q ?? string.Empty);
             return Ok(results);
         }
+
+        [HttpGet("paged")]
+        public async Task<ActionResult> GetPaged([FromQuery] int page = 1, [FromQuery] int size = 10)
+        {
+            if (page < 1 || size < 1) return BadRequest("Page and size must be greater than 0.");
+            var (products, totalCount) = await _productService.GetProductsPagedAsync(page, size);
+
+            var response = new
+            {
+                Page = page,
+                PageSize = size,
+                TotalCount = totalCount,
+                TotalPages = (int)Math.Ceiling(totalCount / (double)size),
+                Items = products
+            };
+
+            return Ok(response);
+        }
     }
 }

@@ -13,5 +13,6 @@
         Task<IEnumerable<Product>> GetAllProductsAsync();
         Task<bool> ProductExistsAsync(string name);
         Task<IEnumerable<Product>> SearchProductsAsync(string query);
+        Task<(IEnumerable<Product> Products, int TotalCount)> GetProductsPagedAsync(int pageNumber, int pageSize);
     }
 }

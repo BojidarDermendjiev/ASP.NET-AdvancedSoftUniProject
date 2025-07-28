@@ -107,5 +107,10 @@
         {
             return await _productRepository.SearchAsync(query);
         }
+
+        public async Task<(IEnumerable<Product> Products, int TotalCount)> GetProductsPagedAsync(int pageNumber, int pageSize)
+        {
+            return await this._productRepository.GetPagesAsync(pageNumber, pageSize);
+        }
     }
 }

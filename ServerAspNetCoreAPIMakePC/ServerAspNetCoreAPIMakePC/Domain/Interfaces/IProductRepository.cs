@@ -11,5 +11,6 @@
         Task UpdateAsync(Product product);
         Task DeleteAsync(Guid id);
         Task<IEnumerable<Product>> SearchAsync(string query);
+        Task<(IEnumerable<Product> products, int totalCount)> GetPagesAsync(int pageNumber, int pageSize);
     }
 }

@@ -12,6 +12,8 @@
         public const string UserNotFoundById = "User with ID {0} not found.";
         public const string UserExistingEmailAddress = "User with email {0} already exists";
         public const string EmptyUserPassword = "Password and Confirm Password cannot be empty.";
+        public const string UserNotFound = "User not found.";
+        public const string UserPasswordChangeSuccessfully = "Password changed successfully.";
 
         // Brand-related error messages
         public const string InvalidBrandName = "Brand name must be between 2 and 100 characters.";
