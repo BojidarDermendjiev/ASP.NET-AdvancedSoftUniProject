@@ -1,6 +1,9 @@
 ﻿namespace ServerAspNetCoreAPIMakePC.API.Controllers
 {
-    public class ShoppingCartController
+    using Microsoft.AspNetCore.Mvc;
+
+    public class ShoppingCartController : ControllerBase
     {
+
     }
 }

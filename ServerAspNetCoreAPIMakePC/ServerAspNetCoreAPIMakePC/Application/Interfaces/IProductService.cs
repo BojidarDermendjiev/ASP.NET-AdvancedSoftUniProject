@@ -3,6 +3,7 @@
     using DTOs;
 
     using Domain.Entities;
+    using ServerAspNetCoreAPIMakePC.Application.DTOs.Product;
 
     public interface IProductService
     {

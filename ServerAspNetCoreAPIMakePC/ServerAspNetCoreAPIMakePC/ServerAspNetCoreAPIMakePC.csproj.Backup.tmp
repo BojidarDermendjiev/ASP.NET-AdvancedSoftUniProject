@@ -48,6 +48,10 @@
     <Folder Include="API\ModelBinders\" />
     <Folder Include="API\Properties\" />
     <Folder Include="Application\DTOs\Feedback\" />
+    <Folder Include="Application\DTOs\Basket\" />
+    <Folder Include="Application\DTOs\ShoppingCart\" />
+    <Folder Include="Application\DTOs\Product\" />
+    <Folder Include="Application\DTOs\User\" />
     <Folder Include="Application\UseCases\" />
     <Folder Include="Domain\Enums\" />
     <Folder Include="Domain\ValueObjects\" />

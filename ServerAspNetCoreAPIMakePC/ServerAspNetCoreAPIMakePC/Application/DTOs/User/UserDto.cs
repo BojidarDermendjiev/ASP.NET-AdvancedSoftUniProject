@@ -1,4 +1,4 @@
-﻿namespace ServerAspNetCoreAPIMakePC.Application.DTOs
+﻿namespace ServerAspNetCoreAPIMakePC.Application.DTOs.User
 {
     public class UserDto
     {

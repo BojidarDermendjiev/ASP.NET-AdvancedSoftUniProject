@@ -5,6 +5,8 @@
     using Application.DTOs;
     using Application.Interfaces;
     using static Domain.ErrorMessages.ErrorMessages;
+    using ServerAspNetCoreAPIMakePC.Application.DTOs.User;
+
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;

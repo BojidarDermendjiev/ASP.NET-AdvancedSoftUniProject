@@ -8,6 +8,7 @@
     using Domain.Entities;
     using Domain.Interfaces;
     using static Domain.ErrorMessages.ErrorMessages;
+    using ServerAspNetCoreAPIMakePC.Application.DTOs.User;
 
     public class UserService : IUserService
     {

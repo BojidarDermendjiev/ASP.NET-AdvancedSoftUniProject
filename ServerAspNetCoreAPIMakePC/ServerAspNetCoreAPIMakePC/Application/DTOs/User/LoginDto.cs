@@ -1,19 +1,21 @@
-﻿namespace ServerAspNetCoreAPIMakePC.Application.DTOs
+﻿namespace ServerAspNetCoreAPIMakePC.Application.DTOs.User
 {
     using System.ComponentModel.DataAnnotations;
 
-    public class AuthenticateUserDto
+    public class LoginDto
     {
         /// <summary>
         /// The user's email address.
         /// </summary>
-        [Required, EmailAddress]
+        [Required]
+        [EmailAddress]
         public string Email { get; set; } = null!;
 
         /// <summary>
         /// The user's password.
         /// </summary>
         [Required]
+        [DataType(DataType.Password)]
         public string Password { get; set; } = null!;
     }
 }

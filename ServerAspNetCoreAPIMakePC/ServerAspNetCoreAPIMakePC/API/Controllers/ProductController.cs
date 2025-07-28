@@ -5,6 +5,7 @@
     using Domain.Entities;
     using Application.DTOs;
     using Application.Interfaces;
+    using ServerAspNetCoreAPIMakePC.Application.DTOs.Product;
 
     [ApiController]
     [Route("api/[controller]")]

@@ -1,4 +1,4 @@
-﻿namespace ServerAspNetCoreAPIMakePC.Application.DTOs
+﻿namespace ServerAspNetCoreAPIMakePC.Application.DTOs.Product
 {
     using System.ComponentModel.DataAnnotations;
 

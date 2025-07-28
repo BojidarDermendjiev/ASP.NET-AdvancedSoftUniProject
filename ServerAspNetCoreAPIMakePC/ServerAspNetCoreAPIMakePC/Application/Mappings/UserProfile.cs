@@ -5,6 +5,7 @@
     using DTOs;
     using Utilities;
     using Domain.Entities;
+    using ServerAspNetCoreAPIMakePC.Application.DTOs.User;
 
     public class UserProfile : Profile
     {

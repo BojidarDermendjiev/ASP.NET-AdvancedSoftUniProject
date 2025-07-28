@@ -1,6 +1,8 @@
 ﻿namespace ServerAspNetCoreAPIMakePC.Application.Interfaces
 {
     using DTOs;
+    using ServerAspNetCoreAPIMakePC.Application.DTOs.User;
+
     public interface IUserService
     {
         Task RegisterUserAsync(RegisterUserDto dto);
