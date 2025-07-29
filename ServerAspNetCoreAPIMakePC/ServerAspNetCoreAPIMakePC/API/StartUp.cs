@@ -28,6 +28,7 @@ namespace ServerAspNetCoreAPIMakePC.API
             builder.Services.AddScoped<IShoppingCartService, ShoppingCartService>();
             //Repositories
             builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<IOrderRepository, OrderRepository>();
             builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
             builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();

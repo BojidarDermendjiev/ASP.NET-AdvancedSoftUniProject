@@ -33,6 +33,13 @@ namespace ServerAspNetCoreAPIMakePC.Domain.ErrorMessages
         // Order-related error messages
         public const string InvalidShippingAddress = "Shipping address must be between 10 and 200 characters and contain a valid street, city, and postal code.";
         public const string InvalidPaymentStatus = "Payment status must be either 'Pending', 'Completed', or 'Failed'.";
+        public const string InvalidOrder = "Order information is missing. Please provide the required order details.";
+        public const string OrderNotFound = "Order not found.";
+        public const string OrderMismatch = "The provided order ID does not match the expected value.";
+        public const string OrderTotalPriceErrorMessage = "Total price must be positive.";
+        public const string InvalidQuantity = "Quantity must be at least 1.";
+        public const string InvalidUnitPrice = "Unit price must be positive.";
+
 
         // Product-related error messages
         public const string InvalidProductName = "Product name must be between 2 and 100 characters.";

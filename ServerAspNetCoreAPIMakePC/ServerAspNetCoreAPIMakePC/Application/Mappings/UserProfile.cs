@@ -4,6 +4,7 @@
 
     using Utilities;
     using DTOs.User;
+    using DTOs.Order;
     using DTOs.Review;
     using DTOs.Category;
     using DTOs.ShoppingCart;
@@ -64,6 +65,18 @@
             CreateMap<CategoryDto, Category>();
             CreateMap<CreateCategoryDto, Category>();
             CreateMap<UpdateCategoryDto, Category>();
+
+            CreateMap<Order, OrderDto>()
+                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.FullName))
+                .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items));
+            CreateMap<OrderItem, OrderItemDto>()
+                .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Product.Name));
+
+            CreateMap<CreateOrderDto, Order>()
+                .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items));
+            CreateMap<CreateOrderItemDto, OrderItem>();
+            CreateMap<UpdateOrderDto, Order>()
+                .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items));
         }
     }
 }
