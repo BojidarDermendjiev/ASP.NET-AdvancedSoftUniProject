@@ -6,18 +6,34 @@
     using Domain.Entities;
     using Domain.Interfaces;
 
+    /// <summary>
+    /// Repository implementation for managing Product entities in the database.
+    /// Provides CRUD operations, searching, and pagination for products.
+    /// </summary>
     public class ProductRepository : IProductRepository
     {
         private readonly MakePCDbContext _context;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ProductRepository"/> class.
+        /// </summary>
         public ProductRepository(MakePCDbContext context)
-            => this._context = context;
+        {
+            this._context = context;
+        }
+
+        /// <summary>
+        /// Retrieves a product by its unique identifier.
+        /// </summary>
         public async Task<Product?> GetByIdAsync(Guid id)
         {
             return await this._context.Products
                 .FirstOrDefaultAsync(p => p.Id == id);
         }
 
+        /// <summary>
+        /// Retrieves a product by its name.
+        /// </summary>
         public async Task<Product?> GetByNameAsync(string name)
         {
 
@@ -25,22 +41,35 @@
                 .FirstOrDefaultAsync(p => p.Name == name);
         }
 
+        /// <summary>
+        /// Retrieves all products from the database.
+        /// </summary>
         public async Task<IEnumerable<Product>> GetAllAsync()
         {
             return await this._context.Products.ToListAsync();
         }
 
+        /// <summary>
+        /// Adds a new product to the database.
+        /// </summary>
         public async Task AddAsync(Product product)
         {
             await this._context.Products.AddAsync(product);
             await this._context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Updates an existing product in the database.
+        /// </summary>
         public async Task UpdateAsync(Product product)
         {
             this._context.Products.Update(product);
             await this._context.SaveChangesAsync();
         }
+
+        /// <summary>
+        /// Deletes a product by its unique identifier.
+        /// </summary>
 
         public async Task DeleteAsync(Guid id)
         {
@@ -54,6 +83,9 @@
             }
         }
 
+        /// <summary>
+        /// Searches for products by name or description containing the specified query string.
+        /// </summary>
         public async Task<IEnumerable<Product>> SearchAsync(string query)
         {
             return await this._context.Products
@@ -61,6 +93,9 @@
                 .ToListAsync();
         }
 
+        /// <summary>
+        /// Retrieves a paginated list of products and the total count of products in the database.
+        /// </summary>
         public async Task<(IEnumerable<Product> products, int totalCount)> GetPagesAsync(int pageNumber, int pageSize)
         {
             var query = _context.Products.AsQueryable();

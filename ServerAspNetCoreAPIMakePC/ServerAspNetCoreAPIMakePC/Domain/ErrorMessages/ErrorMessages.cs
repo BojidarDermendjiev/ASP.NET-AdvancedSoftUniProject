@@ -48,9 +48,14 @@ namespace ServerAspNetCoreAPIMakePC.Domain.ErrorMessages
         // Review-related error messages
         public const string InvalidReviewComment = "Review comment must be between 50 and 1000 characters.";
         public const string InvalidReviewRating = "Review rating must be between 1 and 5.";
+        public const string EmptyReview = "Review cannot me empty!";
+        public const string ReviewNotFound = "Review not found.";
+        public const string ReviewInvalid = "Review is invalid. Please check the comment and rating requirements.";
+        public const string ReviewIdMismatch = "The provided review ID does not match the expected value.";
 
         // Feedback-related error messages
         public const string InvalidFeedbackComment = "Feedback comment must be between 10 and 1000 characters.";
         public const string InvalidFeedbackRating = "Feedback rating must be between 1 and 5.";
+   
     }
 }

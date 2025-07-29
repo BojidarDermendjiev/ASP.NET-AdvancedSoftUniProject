@@ -1,9 +1,11 @@
 ﻿namespace ServerAspNetCoreAPIMakePC.Application.Mappings
 {
-    using AutoMapper;
+
     
     using Utilities;
     using DTOs.User;
+    using AutoMapper;
+    using DTOs.Review;
     using Domain.Entities;
     using DTOs.ShoppingCart;
 
@@ -47,7 +49,16 @@
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.Basket, opt => opt.Ignore()) 
                 .ForMember(dest => dest.BasketId, opt => opt.Ignore()) 
-                .ForMember(dest => dest.Product, opt => opt.Ignore()); 
+                .ForMember(dest => dest.Product, opt => opt.Ignore());
+
+            CreateMap<Review, ReviewDto>();
+            CreateMap<CreateReviewDto, Review>();
+            CreateMap<UpdateReviewDto, Review>();
+            CreateMap<Review, Review>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.User, opt => opt.Ignore())
+                .ForMember(dest => dest.Product, opt => opt.Ignore())
+                .ForMember(dest => dest.Date, opt => opt.Ignore());
         }
     }
 }
