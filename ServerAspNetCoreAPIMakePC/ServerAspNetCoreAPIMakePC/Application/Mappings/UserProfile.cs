@@ -1,13 +1,13 @@
 ﻿namespace ServerAspNetCoreAPIMakePC.Application.Mappings
 {
+    using AutoMapper;
 
-    
     using Utilities;
     using DTOs.User;
-    using AutoMapper;
     using DTOs.Review;
-    using Domain.Entities;
+    using DTOs.Category;
     using DTOs.ShoppingCart;
+    using Domain.Entities;
 
 
     public class UserProfile : Profile
@@ -59,6 +59,11 @@
                 .ForMember(dest => dest.User, opt => opt.Ignore())
                 .ForMember(dest => dest.Product, opt => opt.Ignore())
                 .ForMember(dest => dest.Date, opt => opt.Ignore());
+
+            CreateMap<Category, CategoryDto>();
+            CreateMap<CategoryDto, Category>();
+            CreateMap<CreateCategoryDto, Category>();
+            CreateMap<UpdateCategoryDto, Category>();
         }
     }
 }

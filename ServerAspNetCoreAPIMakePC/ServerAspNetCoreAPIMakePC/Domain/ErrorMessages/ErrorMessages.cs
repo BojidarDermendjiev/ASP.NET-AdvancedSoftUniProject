@@ -26,6 +26,9 @@ namespace ServerAspNetCoreAPIMakePC.Domain.ErrorMessages
         // Category-related error messages
         public const string InvalidCategoryName = "Category name must be between 2 and 100 characters.";
         public const string InvalidCategoryDescriptionName = "Category description must be between 50 and 500 characters.";
+        public const string InvalidCategoryCannotBeNull = "Category cannot be null.";
+        public const string CategoryNotFound = "Category not found.";
+        public const string CategoryMismatch = "ID mismatch.";
 
         // Order-related error messages
         public const string InvalidShippingAddress = "Shipping address must be between 10 and 200 characters and contain a valid street, city, and postal code.";
