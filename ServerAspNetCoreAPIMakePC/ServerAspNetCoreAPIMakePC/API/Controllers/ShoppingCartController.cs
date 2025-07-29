@@ -1,10 +1,9 @@
-﻿using ServerAspNetCoreAPIMakePC.Application.DTOs.ShoppingCart;
-
-namespace ServerAspNetCoreAPIMakePC.API.Controllers
+﻿namespace ServerAspNetCoreAPIMakePC.API.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
 
     using Application.Interfaces;
+    using Application.DTOs.ShoppingCart;
 
 
     [ApiController]

@@ -1,8 +1,8 @@
 ﻿namespace ServerAspNetCoreAPIMakePC.API.Controllers
 {
     using Application.Interfaces;
+    using Application.DTOs.Review;
     using Microsoft.AspNetCore.Mvc;
-    using ServerAspNetCoreAPIMakePC.Application.DTOs.Review;
     using static Domain.ErrorMessages.ErrorMessages;
 
     [ApiController]

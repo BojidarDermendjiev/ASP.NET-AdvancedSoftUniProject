@@ -1,6 +1,8 @@
 ﻿namespace ServerAspNetCoreAPIMakePC.API.Controllers
 {
-    public class CategoryController
+    using Microsoft.AspNetCore.Mvc;
+
+    public class CategoryController : ControllerBase
     {
     }
 }
