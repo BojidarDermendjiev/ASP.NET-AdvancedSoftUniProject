@@ -22,6 +22,9 @@ namespace ServerAspNetCoreAPIMakePC.Domain.ErrorMessages
         public const string InvalidBrandName = "Brand name must be between 2 and 100 characters.";
         public const string InvalidBrandDescription = "Brand description must be between 10 and 500 characters.";
         public const string InvalidBrandLogoUrl = "Brand logo URL must be a valid URL.";
+        public const string InvalidBrandCannotBeNull = "Brand cannot be empty. Please select a valid brand.";
+        public const string InvalidBrandNotFound = "Brand not found.";
+        public const string IdMismatchUserFriendly = "The ID you provided does not match our records. Please check the ID and try again.";
 
         // Category-related error messages
         public const string InvalidCategoryName = "Category name must be between 2 and 100 characters.";
@@ -66,6 +69,10 @@ namespace ServerAspNetCoreAPIMakePC.Domain.ErrorMessages
         // Feedback-related error messages
         public const string InvalidFeedbackComment = "Feedback comment must be between 10 and 1000 characters.";
         public const string InvalidFeedbackRating = "Feedback rating must be between 1 and 5.";
-   
+        public const string EmptyFeedback = "Feedback cannot be empty!";
+        public const string FeedbackNotFound = "Feedback not found.";
+        public const string IdMismatch = "The provided ID does not match the expected value. Please check and try again.";
+        
+        
     }
 }

@@ -29,7 +29,7 @@
         /// </summary>
         public async Task<ShoppingCart?> GetByUserIdAsync(Guid userId)
         {
-            return await _context.ShoppingCarts
+            return await this._context.ShoppingCarts
                 .Include(c => c.Items)
                 .FirstOrDefaultAsync(c => c.UserId == userId);
         }
@@ -40,13 +40,13 @@
         /// </summary>
         public async Task UpsertAsync(ShoppingCart cart)
         {
-            var existingCart = await _context.ShoppingCarts
+            var existingCart = await this._context.ShoppingCarts
                 .Include(c => c.Items)
                 .FirstOrDefaultAsync(c => c.UserId == cart.UserId);
 
             if (existingCart is null)
             {
-                await _context.ShoppingCarts.AddAsync(cart);
+                await this._context.ShoppingCarts.AddAsync(cart);
             }
             else
             {
@@ -54,7 +54,7 @@
                 {
                     if (cart.Items.All(i => i.Id != item.Id))
                     {
-                        _context.Set<BasketItem>().Remove(item);
+                        this._context.Set<BasketItem>().Remove(item);
                     }
                 }
 
@@ -67,14 +67,14 @@
                     }
                     else
                     {
-                        _mapper.Map(basketItem, existingItem);
+                        this._mapper.Map(basketItem, existingItem);
                     }
                 }
 
                 existingCart.DateCreated = cart.DateCreated;
             }
 
-            await _context.SaveChangesAsync();
+            await this._context.SaveChangesAsync();
         }
 
         /// <summary>
@@ -82,14 +82,14 @@
         /// </summary>
         public async Task DeleteByUserIdAsync(Guid userId)
         {
-            var cart = await _context.ShoppingCarts
+            var cart = await this._context.ShoppingCarts
                 .Include(c => c.Items)
                 .FirstOrDefaultAsync(c => c.UserId == userId);
 
             if (cart != null)
             {
-                _context.ShoppingCarts.Remove(cart);
-                await _context.SaveChangesAsync();
+                this._context.ShoppingCarts.Remove(cart);
+                await this._context.SaveChangesAsync();
             }
         }
     }

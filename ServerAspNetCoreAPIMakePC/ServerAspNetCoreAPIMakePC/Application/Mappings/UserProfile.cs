@@ -2,13 +2,15 @@
 {
     using AutoMapper;
 
-    using Utilities;
-    using DTOs.User;
     using DTOs.Order;
+    using DTOs.User;
+    using DTOs.Brand;
     using DTOs.Review;
     using DTOs.Category;
-    using DTOs.ShoppingCart;
+    using DTOs.Feedback;
     using Domain.Entities;
+    using DTOs.ShoppingCart;
+    using Utilities;
 
 
     public class UserProfile : Profile
@@ -77,6 +79,14 @@
             CreateMap<CreateOrderItemDto, OrderItem>();
             CreateMap<UpdateOrderDto, Order>()
                 .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items));
+
+            CreateMap<PlatformFeedback, PlatformFeedbackDto>();
+            CreateMap<CreatePlatformFeedbackDto, PlatformFeedback>();
+            CreateMap<UpdatePlatformFeedbackDto, PlatformFeedback>();
+
+            CreateMap<Brand, BrandDto>();
+            CreateMap<CreateBrandDto, Brand>();
+            CreateMap<UpdateBrandDto, Brand>();
         }
     }
 }
