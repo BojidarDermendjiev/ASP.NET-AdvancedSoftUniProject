@@ -5,6 +5,7 @@
     using DTOs.Order;
     using DTOs.User;
     using DTOs.Brand;
+    using DTOs.Basket;
     using DTOs.Review;
     using DTOs.Category;
     using DTOs.Feedback;
@@ -87,6 +88,12 @@
             CreateMap<Brand, BrandDto>();
             CreateMap<CreateBrandDto, Brand>();
             CreateMap<UpdateBrandDto, Brand>();
+
+            CreateMap<Basket, BasketDto>()
+                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.FullName))
+                .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items));
+            CreateMap<CreateBasketDto, Basket>();
+            CreateMap<CreateBasketItemDto, BasketItem>();
         }
     }
 }

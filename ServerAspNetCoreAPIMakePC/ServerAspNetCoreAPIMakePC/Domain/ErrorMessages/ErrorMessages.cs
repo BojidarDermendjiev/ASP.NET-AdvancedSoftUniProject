@@ -72,7 +72,10 @@ namespace ServerAspNetCoreAPIMakePC.Domain.ErrorMessages
         public const string EmptyFeedback = "Feedback cannot be empty!";
         public const string FeedbackNotFound = "Feedback not found.";
         public const string IdMismatch = "The provided ID does not match the expected value. Please check and try again.";
-        
-        
+
+        // Basket-related error messages
+        public const string InvalidBasketCannotBeNull = "Basket cannot be empty. Please select or create a basket to continue.";
+        public const string InvalidBasketNotFound = "Basket not found.";
+        public const string BasketMismatch = "The provided basket ID does not match the expected value.";
     }
 }
