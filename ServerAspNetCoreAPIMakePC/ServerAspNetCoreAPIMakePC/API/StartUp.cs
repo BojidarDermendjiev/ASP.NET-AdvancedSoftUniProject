@@ -24,6 +24,7 @@ namespace ServerAspNetCoreAPIMakePC.API
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IBrandService, BrandService>();
             builder.Services.AddScoped<IOrderService, OrderService>();
+            builder.Services.AddScoped<IBasketService, BasketService>();
             builder.Services.AddScoped<IReviewService, ReviewService>();
             builder.Services.AddScoped<IProductService, ProductService>();
             builder.Services.AddScoped<ICategoryService, CategoryService>();
@@ -33,6 +34,7 @@ namespace ServerAspNetCoreAPIMakePC.API
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IBrandRepository, BrandRepository>();
             builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+            builder.Services.AddScoped<IBasketRepository, BasketRepository>();
             builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
             builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
