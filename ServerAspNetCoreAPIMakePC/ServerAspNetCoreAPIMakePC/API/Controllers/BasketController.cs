@@ -17,6 +17,10 @@
             this._basketService = basketService;
         }
 
+        /// <summary>
+        /// Retrieves all baskets.
+        /// GET /api/basket
+        /// </summary>
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -24,6 +28,10 @@
             return Ok(baskets);
         }
 
+        /// <summary>
+        /// Retrieves a specific basket by its ID.
+        /// GET /api/basket/{id}
+        /// </summary>
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -36,6 +44,10 @@
             return Ok(basket);
         }
 
+        /// <summary>
+        /// Retrieves a basket by user ID.
+        /// GET /api/basket/user/{userId}
+        /// </summary>
         [HttpGet("user/{userId:guid}")]
         public async Task<IActionResult> GetByUserId(Guid userId)
         {
@@ -48,6 +60,10 @@
             return Ok(basket);
         }
 
+        /// <summary>
+        /// Creates a new basket.
+        /// POST /api/basket
+        /// </summary>
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateBasketDto dto)
         {
@@ -60,6 +76,10 @@
             return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
         }
 
+        /// <summary>
+        /// Updates an existing basket.
+        /// PUT /api/basket/{id}
+        /// </summary>
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Update(int id, [FromBody] UpdateBasketDto dto)
         {
@@ -85,6 +105,10 @@
             }
         }
 
+        /// <summary>
+        /// Deletes a basket by its ID.
+        /// DELETE /api/basket/{id}
+        /// </summary>
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {

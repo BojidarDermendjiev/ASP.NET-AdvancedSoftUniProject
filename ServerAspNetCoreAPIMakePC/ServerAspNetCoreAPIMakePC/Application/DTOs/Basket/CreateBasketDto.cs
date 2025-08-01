@@ -2,8 +2,6 @@
 {
     using System.ComponentModel.DataAnnotations;
 
-    using static Domain.ErrorMessages.ErrorMessages;
-
     public class CreateBasketDto
     {
         [Required]

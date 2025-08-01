@@ -15,6 +15,11 @@
             this._platformFeedbackService = platformFeedbackService;
         }
 
+
+        /// <summary>
+        /// Retrieves all platform feedback entries.
+        /// GET /api/platformfeedback
+        /// </summary>
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -22,6 +27,10 @@
             return Ok(feedbacks);
         }
 
+        /// <summary>
+        /// Retrieves a specific feedback entry by its ID.
+        /// GET /api/platformfeedback/{id}
+        /// </summary>
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -33,6 +42,10 @@
             return Ok(feedback);
         }
 
+        /// <summary>
+        /// Retrieves all feedback entries for a specific user.
+        /// GET /api/platformfeedback/user/{userId}
+        /// </summary>
         [HttpGet("user/{userId:guid}")]
         public async Task<IActionResult> GetByUserId(Guid userId)
         {
@@ -44,6 +57,10 @@
             return Ok(feedbacks);
         }
 
+        /// <summary>
+        /// Creates a new platform feedback entry.
+        /// POST /api/platformfeedback
+        /// </summary>
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreatePlatformFeedbackDto dto)
         {
@@ -56,6 +73,11 @@
             return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
         }
 
+
+        /// <summary>
+        /// Updates an existing feedback entry.
+        /// PUT /api/platformfeedback/{id}
+        /// </summary>
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Update(int id, [FromBody] UpdatePlatformFeedbackDto dto)
         {
@@ -76,6 +98,10 @@
             }
         }
 
+        /// <summary>
+        /// Deletes a feedback entry by its ID.
+        /// DELETE /api/platformfeedback/{id}
+        /// </summary>
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {

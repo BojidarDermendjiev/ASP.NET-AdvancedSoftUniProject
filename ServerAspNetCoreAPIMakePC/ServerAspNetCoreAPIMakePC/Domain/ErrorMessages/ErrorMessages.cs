@@ -77,5 +77,6 @@ namespace ServerAspNetCoreAPIMakePC.Domain.ErrorMessages
         public const string InvalidBasketCannotBeNull = "Basket cannot be empty. Please select or create a basket to continue.";
         public const string InvalidBasketNotFound = "Basket not found.";
         public const string BasketMismatch = "The provided basket ID does not match the expected value.";
+        public const string InvalidBasketQuantity = "Quantity must be at least 1.";
     }
 }

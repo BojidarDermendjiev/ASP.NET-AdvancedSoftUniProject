@@ -17,7 +17,10 @@
             this._brandService = brandService;
         }
 
-
+        /// <summary>
+        /// Retrieves all brands.
+        /// GET /api/brand
+        /// </summary>
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -25,6 +28,11 @@
             return Ok(brands);
         }
 
+
+        /// <summary>
+        /// Retrieves a specific brand by its ID.
+        /// GET /api/brand/{id}
+        /// </summary>
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -37,6 +45,10 @@
             return Ok(brand);
         }
 
+        /// <summary>
+        /// Creates a new brand.
+        /// POST /api/brand
+        /// </summary>
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateBrandDto dto)
         {
@@ -49,6 +61,10 @@
             return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
         }
 
+        /// <summary>
+        /// Updates an existing brand.
+        /// PUT /api/brand/{id}
+        /// </summary>
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Update(int id, [FromBody] UpdateBrandDto dto)
         {
@@ -74,6 +90,10 @@
             }
         }
 
+        /// <summary>
+        /// Deletes a brand by its ID.
+        /// DELETE /api/brand/{id}
+        /// </summary>
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
