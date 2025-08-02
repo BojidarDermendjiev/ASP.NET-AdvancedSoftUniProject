@@ -1,11 +1,12 @@
 namespace ServerAspNetCoreAPIMakePC.API
 {
+    using System.Text;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.IdentityModel.Tokens;
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
 
     using Infrastructure.Data;
     using Application.Mappings;
-    using Application.Interfaces;
-    using Infrastructure.Services;
     using Infrastructure.DependencyInjection;
 
     public class StartUp
@@ -30,6 +31,8 @@ namespace ServerAspNetCoreAPIMakePC.API
 
             builder.Services.AddAutoMapper(typeof(UserProfile).Assembly);
 
+            builder.Services.AddJwtAuthentication(builder.Configuration);
+
             var app = builder.Build();
 
             if (app.Environment.IsDevelopment())
@@ -40,6 +43,7 @@ namespace ServerAspNetCoreAPIMakePC.API
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllers();

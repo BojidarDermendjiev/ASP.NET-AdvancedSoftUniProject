@@ -1,9 +1,10 @@
 ﻿namespace ServerAspNetCoreAPIMakePC.API.Controllers
 {
-    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Authorization;
 
     using Application.DTOs.User;
     using Application.Interfaces;
+    using Microsoft.AspNetCore.Mvc;
     using static Domain.ErrorMessages.ErrorMessages;
 
     public class UserController : ControllerBase
@@ -18,6 +19,7 @@
         /// Registers a new user.
         /// POST /api/user/register
         /// </summary>
+        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterUserDto userRegistrationDto)
         {
@@ -39,6 +41,7 @@
         /// Authenticate user (login)
         /// POST /api/user/authenticate
         /// </summary>
+        [AllowAnonymous]
         [HttpPost("authenticate")]
         public async Task<ActionResult<UserDto>> Authenticate([FromBody] AuthenticateUserDto dto)
         {
@@ -54,6 +57,7 @@
         /// Get user by ID.
         /// GET /api/user/{id}
         /// </summary>
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<UserDto>> GetById(Guid id)
         {
@@ -68,6 +72,7 @@
         /// Update user by ID.
         /// PUT /api/user/{id}
         /// </summary>
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(Guid id, [FromBody] UpdateUserDto dto)
         {
@@ -85,6 +90,7 @@
         /// Delete user by ID.
         /// DELETE /api/user/{id}
         /// </summary>
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(Guid id)
         {
@@ -103,6 +109,7 @@
         /// Change password for user.
         /// POST /api/user/{id}/change-password
         /// </summary>
+        [Authorize]
         [HttpPost("{id}/change-password")]
         public async Task<IActionResult> ChangePassword(Guid id, [FromBody] ChangePasswordDto dto)
         {
