@@ -13,7 +13,6 @@
     using DTOs.ShoppingCart;
     using Utilities;
 
-
     public class UserProfile : Profile
     {
         public UserProfile()

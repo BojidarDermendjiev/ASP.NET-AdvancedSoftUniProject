@@ -29,6 +29,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="9.0.7" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
     <PackageReference Include="NUnit" Version="4.3.2" />
     <PackageReference Include="OLT.AspNetCore.Authentication.JwtBearer" Version="8.3.1" />
@@ -53,7 +54,6 @@
     <Folder Include="Infrastructure\Data\DbSeed\" />
     <Folder Include="Infrastructure\External\" />
     <Folder Include="Infrastructure\Models\" />
-    <Folder Include="Infrastructure\Services\" />
   </ItemGroup>
 
 </Project>

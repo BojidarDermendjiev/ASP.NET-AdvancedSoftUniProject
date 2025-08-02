@@ -19,6 +19,7 @@
           "Microsoft.EntityFrameworkCore.Proxies": "9.0.7",
           "Microsoft.EntityFrameworkCore.SqlServer": "9.0.7",
           "Microsoft.EntityFrameworkCore.Tools": "9.0.7",
+          "Microsoft.Extensions.Caching.Memory": "9.0.7",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "8.0.7",
           "NUnit": "4.3.2",
           "OLT.AspNetCore.Authentication.JwtBearer": "8.3.1",

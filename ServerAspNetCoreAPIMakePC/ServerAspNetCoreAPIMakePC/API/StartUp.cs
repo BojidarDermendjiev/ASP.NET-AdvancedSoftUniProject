@@ -2,12 +2,11 @@ namespace ServerAspNetCoreAPIMakePC.API
 {
     using Microsoft.EntityFrameworkCore;
 
-    using Domain.Interfaces;
     using Infrastructure.Data;
     using Application.Mappings;
-    using Application.Services;
     using Application.Interfaces;
-    using Infrastructure.Repositories;
+    using Infrastructure.Services;
+    using Infrastructure.DependencyInjection;
 
     public class StartUp
     {
@@ -20,26 +19,10 @@ namespace ServerAspNetCoreAPIMakePC.API
             builder.Services.AddDbContext<MakePCDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-            //Services
-            builder.Services.AddScoped<IUserService, UserService>();
-            builder.Services.AddScoped<IBrandService, BrandService>();
-            builder.Services.AddScoped<IOrderService, OrderService>();
-            builder.Services.AddScoped<IBasketService, BasketService>();
-            builder.Services.AddScoped<IReviewService, ReviewService>();
-            builder.Services.AddScoped<IProductService, ProductService>();
-            builder.Services.AddScoped<ICategoryService, CategoryService>();
-            builder.Services.AddScoped<IShoppingCartService, ShoppingCartService>();
-            builder.Services.AddScoped<IPlatformFeedbackService, PlatformFeedbackService>();
-            //Repositories
-            builder.Services.AddScoped<IUserRepository, UserRepository>();
-            builder.Services.AddScoped<IBrandRepository, BrandRepository>();
-            builder.Services.AddScoped<IOrderRepository, OrderRepository>();
-            builder.Services.AddScoped<IBasketRepository, BasketRepository>();
-            builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
-            builder.Services.AddScoped<IProductRepository, ProductRepository>();
-            builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
-            builder.Services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
-            builder.Services.AddScoped<IPlatformFeedbackRepository, PlatformFeedbackRepository>();
+            builder.Services.AddApplicationServices();
+            builder.Services.AddRepositories();
+
+            builder.Services.AddMemoryCache();
 
             builder.Services.AddEndpointsApiExplorer();
 
