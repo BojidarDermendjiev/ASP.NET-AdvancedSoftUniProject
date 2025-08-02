@@ -16,7 +16,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ServerAspNetCoreAPIMakePC")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7afe9db94f39fc284bbe23776f60762b466b76b3")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+95d34a8eddc30056dee2bc474d54ec0de68eecc7")]
 [assembly: System.Reflection.AssemblyProductAttribute("ServerAspNetCoreAPIMakePC")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ServerAspNetCoreAPIMakePC")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
