@@ -46,6 +46,7 @@
     <Folder Include="API\Middleware\" />
     <Folder Include="API\ModelBinders\" />
     <Folder Include="API\Properties\" />
+    <Folder Include="Application\DTOs\Admin\" />
     <Folder Include="Application\UseCases\" />
     <Folder Include="Domain\Enums\" />
     <Folder Include="Domain\ValueObjects\" />
