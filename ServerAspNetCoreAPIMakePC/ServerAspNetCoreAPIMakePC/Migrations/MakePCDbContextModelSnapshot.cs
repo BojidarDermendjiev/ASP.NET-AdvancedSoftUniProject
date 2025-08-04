@@ -3,7 +3,6 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ServerAspNetCoreAPIMakePC.Infrastructure.Data;
 
@@ -12,11 +11,9 @@ using ServerAspNetCoreAPIMakePC.Infrastructure.Data;
 namespace ServerAspNetCoreAPIMakePC.Migrations
 {
     [DbContext(typeof(MakePCDbContext))]
-    [Migration("20250726091727_AddDecimalPrecisionToPrices")]
-    partial class AddDecimalPrecisionToPrices
+    partial class MakePCDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -133,8 +130,8 @@ namespace ServerAspNetCoreAPIMakePC.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
                         .HasComment("Name of the category.");
 
                     b.HasKey("Id");
@@ -157,14 +154,14 @@ namespace ServerAspNetCoreAPIMakePC.Migrations
 
                     b.Property<string>("PaymentStatus")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
                         .HasComment("The payment status of the order.");
 
                     b.Property<string>("ShippingAddress")
                         .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasComment("The shipping address for the order.");
 
                     b.Property<decimal>("TotalPrice")
@@ -287,8 +284,8 @@ namespace ServerAspNetCoreAPIMakePC.Migrations
 
                     b.Property<string>("Specs")
                         .IsRequired()
-                        .HasMaxLength(2000)
-                        .HasColumnType("nvarchar(2000)")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)")
                         .HasComment("Specifications of the product.");
 
                     b.Property<int>("Stock")
@@ -402,6 +399,11 @@ namespace ServerAspNetCoreAPIMakePC.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)")
                         .HasComment("Password hash for the user.");
+
+                    b.Property<byte[]>("PasswordSalt")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)")
+                        .HasComment("Salt used for hashing the user's password.");
 
                     b.Property<string>("Role")
                         .IsRequired()

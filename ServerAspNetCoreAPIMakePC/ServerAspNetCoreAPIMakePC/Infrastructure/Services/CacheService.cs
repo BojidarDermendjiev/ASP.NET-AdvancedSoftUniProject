@@ -1,34 +1,34 @@
 ﻿namespace ServerAspNetCoreAPIMakePC.Infrastructure.Services
 {
     using Application.Interfaces;
+    using Microsoft.Extensions.Caching.Memory;
 
     public class CacheService : ICacheService
     {
-        private readonly ICacheService _cacheService;
-        public CacheService(ICacheService cacheService)
+        private readonly IMemoryCache _memoryCache;
+
+        public CacheService(IMemoryCache memoryCache)
         {
-           this._cacheService = cacheService;
+            _memoryCache = memoryCache;
         }
+
         public void Set<T>(string key, T value, TimeSpan? absoluteExpiration = null)
         {
+            var options = new MemoryCacheEntryOptions();
             if (absoluteExpiration.HasValue)
-            {
-                this._cacheService.Set(key, value, absoluteExpiration.Value);
-            }
-            else
-            {
-                this._cacheService.Set(key, value);
-            }
+                options.SetAbsoluteExpiration(absoluteExpiration.Value);
+
+            _memoryCache.Set(key, value, options);
         }
 
         public bool TryGetValue<T>(string key, out T value)
         {
-            return this._cacheService.TryGetValue(key, out value);
+            return _memoryCache.TryGetValue(key, out value);
         }
 
         public void Remove(string key)
         {
-            this._cacheService.Remove(key);
+            _memoryCache.Remove(key);
         }
     }
 }

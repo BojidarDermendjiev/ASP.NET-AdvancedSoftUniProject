@@ -9,6 +9,7 @@
         Task<IEnumerable<OrderDto>> GetAllAsync();
         Task<OrderDto> CreateAsync(CreateOrderDto dto);
         Task<OrderDto> UpdateAsync(UpdateOrderDto dto);
+        Task<OrderDto> CreateOrderAsync(CreateOrderDto dto);
         Task DeleteAsync(int id);
     }
 }

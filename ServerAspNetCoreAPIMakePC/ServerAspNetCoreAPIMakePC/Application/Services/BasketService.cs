@@ -6,6 +6,7 @@
     using DTOs.Basket;
     using Domain.Entities;
     using Domain.Interfaces;
+    using Domain.ValueObjects;
     using static Domain.ErrorMessages.ErrorMessages;
 
     /// <summary>
@@ -96,7 +97,7 @@
                 var item = new BasketItem
                 {
                     ProductId = itemDto.ProductId,
-                    Quantity = itemDto.Quantity,
+                    Quantity = new Quantity(itemDto.Quantity),
                     BasketId = existing.Id
                 };
                 existing.Items.Add(item);
@@ -104,6 +105,22 @@
 
             await _basketRepository.UpdateAsync(existing);
             return _mapper.Map<BasketDto>(existing);
+        }
+
+        /// <summary>
+        /// Removes all items from the basket for the specified user, effectively clearing the basket.
+        /// </summary>
+        /// <param name="userId">The unique identifier of the user whose basket will be cleared.</param>
+        /// <exception cref="KeyNotFoundException">Thrown if the basket for the specified user does not exist.</exception>
+        public async Task ClearBasketAsync(Guid userId)
+        {
+            var basket = await this._basketRepository.GetByUserIdAsync(userId);
+            if (basket is null)
+            {
+                throw new KeyNotFoundException(string.Format(InvalidBasketNotFound));
+            }
+            basket.Items.Clear();
+            await this._basketRepository.UpdateAsync(basket);
         }
 
         /// <summary>
@@ -118,7 +135,7 @@
             {
                 throw new KeyNotFoundException(string.Format(InvalidBasketNotFound));
             }
-            await this._basketRepository.DeleteAsync(id);   
+            await this._basketRepository.DeleteAsync(id);
         }
     }
 }

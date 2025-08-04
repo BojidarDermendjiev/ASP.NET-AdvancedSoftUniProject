@@ -4,8 +4,9 @@
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    using static ErrorMessages.ErrorMessages;
+    using ValueObjects;
     using static Constants.PlatformFeedbackValidationConstants;
+    using static ErrorMessages.ErrorMessages;
 
     public class PlatformFeedback
     {
@@ -25,11 +26,11 @@
         [Required]
         [Comment("Identifier for the platform associated with the feedback.")]
         [Range(PlatformFeedbackRatingMinValue, PlatformFeedbackRatingMaxValue, ErrorMessage = InvalidFeedbackRating)]
-        public int Rating { get; set; }
+        public Rating Rating { get; set; } = null!;
 
         [Comment("Text content of the feedback provided by the user.")]
         [StringLength(PlatformFeedbackCommentMaxLength, MinimumLength = PlatformFeedbackCommentMinLength, ErrorMessage = InvalidFeedbackComment)]
-        public string Comment { get; set; } = string.Empty;
+        public FeedbackComment Comment { get; set; } = null!;
 
         [Required]
         [Comment("The date and time when the feedback was given.")]

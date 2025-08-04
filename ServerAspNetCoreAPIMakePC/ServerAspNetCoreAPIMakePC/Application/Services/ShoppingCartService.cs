@@ -1,11 +1,12 @@
-﻿namespace ServerAspNetCoreAPIMakePC.Application.Services
+﻿﻿namespace ServerAspNetCoreAPIMakePC.Application.Services
 {
     using AutoMapper;
-
+   
     using Interfaces;
     using Domain.Entities;
     using Domain.Interfaces;
     using DTOs.ShoppingCart;
+    using Domain.ValueObjects;
     using static Domain.ErrorMessages.ErrorMessages;
 
     /// <summary>
@@ -70,7 +71,7 @@
             }
             else
             {
-                basketItem.Quantity += dto.Quantity;
+                basketItem.Quantity = new Quantity(basketItem.Quantity.Value + dto.Quantity);
                 cart.Items.Add(basketItem);
             }
             await this._shoppingCartRepository.UpsertAsync(cart);

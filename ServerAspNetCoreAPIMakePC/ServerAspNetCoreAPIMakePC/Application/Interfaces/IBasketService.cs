@@ -9,6 +9,8 @@
         Task<IEnumerable<BasketDto>> GetAllAsync();
         Task<BasketDto> CreateAsync(CreateBasketDto dto);
         Task<BasketDto> UpdateAsync(UpdateBasketDto dto);
+        Task ClearBasketAsync(Guid userId);
+
         Task DeleteAsync(int id);
     }
 }

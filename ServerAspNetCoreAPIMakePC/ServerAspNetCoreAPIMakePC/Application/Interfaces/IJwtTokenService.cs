@@ -4,6 +4,6 @@
 
     public interface IJwtTokenService
     {
-        string GenerateToken(string userId, string userName, IEnumerable<Claim> additionalClaims = null);
+        string GenerateToken(string userId, string userName, IEnumerable<Claim>? additionalClaims = null);
     }
 }

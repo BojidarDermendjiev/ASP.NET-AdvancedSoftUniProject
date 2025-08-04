@@ -4,6 +4,7 @@
 
     using DTOs.Order;
     using Interfaces;
+    using Domain.Entities;
     using Domain.Interfaces;
     using static Domain.ErrorMessages.ErrorMessages;
 
@@ -68,7 +69,7 @@
         public async Task<OrderDto> CreateAsync(CreateOrderDto dto)
         {
             var order = this._mapper.Map<Domain.Entities.Order>(dto);
-            order.OrderDate = DateTime.UtcNow; 
+            order.OrderDate = DateTime.UtcNow;
             await this._orderRepository.AddAsync(order);
             return this._mapper.Map<OrderDto>(order);
         }
@@ -89,6 +90,19 @@
             this._mapper.Map(dto, existingOrder);
             await this._orderRepository.UpdateAsync(existingOrder);
             return this._mapper.Map<OrderDto>(existingOrder);
+        }
+
+        /// <summary>
+        /// Creates a new order based on the provided order data.
+        /// </summary>
+        /// <param name="dto">The DTO containing information required to create the order.</param>
+        /// <returns>The created order as a DTO.</returns>
+        public async Task<OrderDto> CreateOrderAsync(CreateOrderDto dto)
+        {
+            var order = this._mapper.Map<Order>(dto);
+            order.OrderDate = DateTime.UtcNow;
+            await this._orderRepository.AddAsync(order);
+            return this._mapper.Map<OrderDto>(order);
         }
 
         /// <summary>

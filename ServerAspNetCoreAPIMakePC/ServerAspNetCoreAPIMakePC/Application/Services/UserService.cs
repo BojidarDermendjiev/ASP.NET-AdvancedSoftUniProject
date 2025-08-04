@@ -1,12 +1,14 @@
 ﻿namespace ServerAspNetCoreAPIMakePC.Application.Services
 {
     using AutoMapper;
-    
+
     using DTOs.User;
     using Utilities;
     using Interfaces;
     using Domain.Entities;
     using Domain.Interfaces;
+    using Domain.ValueObjects;
+
     using static Domain.ErrorMessages.ErrorMessages;
 
     /// <summary>
@@ -38,7 +40,7 @@
         /// <exception cref="ArgumentException">Thrown if the passwords are empty.</exception>
         public async Task RegisterUserAsync(RegisterUserDto dto)
         {
-            var existingUser = await this._userRepository.GetByEmailAsync(dto.Email);
+            var existingUser = await this._userRepository.GetByEmailAsync(new Email(dto.Email));
             if (existingUser != null)
             {
                 throw new InvalidOperationException(string.Format(UserExistingEmailAddress, dto.Email));
@@ -70,7 +72,7 @@
         /// <param name="email">The user's email address.</param>
         /// <param name="password">The user's password.</param>
         /// <returns>The authenticated user as a UserDto, or null if authentication fails.</returns>
-        public async Task<UserDto?> AuthenticateUserAsync(string email, string password)
+        public async Task<UserDto?> AuthenticateUserAsync(Email email, string password)
         {
             var user = await this._userRepository.GetByEmailAsync(email);
             if (user is null)
@@ -104,7 +106,7 @@
         /// </summary>
         /// <param name="email">The user's email address.</param>
         /// <returns>The user as a UserDto, or null if not found.</returns>
-        public async Task<UserDto?> GetUserByEmailAsync(string email)
+        public async Task<UserDto?> GetUserByEmailAsync(Email email)
         {
             var user = await _userRepository.GetByEmailAsync(email);
             return user is null ? null : _mapper.Map<UserDto>(user);
@@ -151,7 +153,7 @@
         /// </summary>
         /// <param name="email">The email address to check.</param>
         /// <returns>True if the email exists, false otherwise.</returns>
-        public async Task<bool> EmailExistsAsync(string email)
+        public async Task<bool> EmailExistsAsync(Email email)
         {
             var user = await _userRepository.GetByEmailAsync(email);
             return user != null;

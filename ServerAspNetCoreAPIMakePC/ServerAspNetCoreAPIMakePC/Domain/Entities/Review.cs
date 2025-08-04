@@ -4,8 +4,9 @@
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    using static ErrorMessages.ErrorMessages;
+    using ValueObjects;
     using static Constants.ReviewValidationConstants;
+    using static ErrorMessages.ErrorMessages;
 
     public class Review
     {
@@ -32,7 +33,7 @@
         [Required]
         [Comment("Rating given in the review, typically on a scale of 1 to 5.")]
         [Range(ReviewRatingMinValue, ReviewRatingMaxValue, ErrorMessage = InvalidReviewRating)]
-        public int Rating { get; set; }
+        public Rating Rating { get; set; } = null!;
 
         [Required]
         [Comment("Text content of the review.")]

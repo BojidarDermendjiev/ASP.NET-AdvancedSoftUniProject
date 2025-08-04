@@ -3,8 +3,10 @@
     using Microsoft.EntityFrameworkCore;
     using System.ComponentModel.DataAnnotations;
 
-    using static ErrorMessages.ErrorMessages;
+    using ValueObjects;
     using static Constants.BrandValidationConstants;
+    using static ErrorMessages.ErrorMessages;
+
     public class Brand
     {
         [Required]
@@ -14,7 +16,7 @@
         [Required]
         [Comment("Name of the brand.")]
         [StringLength(BrandNameMaxLength, MinimumLength = BrandNameMinLength, ErrorMessage = InvalidBrandName)]
-        public string Name { get; set; } = null!;
+        public BrandName Name { get; set; } = null!;
 
         [Required]
         [Comment("Description of the brand.")]

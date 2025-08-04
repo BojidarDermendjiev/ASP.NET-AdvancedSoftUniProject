@@ -1,4 +1,6 @@
-﻿namespace ServerAspNetCoreAPIMakePC.Infrastructure.Repositories
+﻿using ServerAspNetCoreAPIMakePC.Domain.ValueObjects;
+
+namespace ServerAspNetCoreAPIMakePC.Infrastructure.Repositories
 {
     using Microsoft.EntityFrameworkCore;
 
@@ -35,7 +37,7 @@
         /// <summary>
         /// Retrieves a user by their email address.
         /// </summary>
-        public async Task<User?> GetByEmailAsync(string email)
+        public async Task<User?> GetByEmailAsync(Email email)
         {
             return await this._context.Users
                 .FirstOrDefaultAsync(u => u.Email == email);

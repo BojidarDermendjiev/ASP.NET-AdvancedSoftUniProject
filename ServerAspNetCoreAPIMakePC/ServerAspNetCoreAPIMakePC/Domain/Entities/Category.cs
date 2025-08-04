@@ -3,8 +3,10 @@
     using Microsoft.EntityFrameworkCore;
     using System.ComponentModel.DataAnnotations;
 
-    using static ErrorMessages.ErrorMessages;
+    using ValueObjects;
     using static Constants.CategoryValidationConstants;
+    using static ErrorMessages.ErrorMessages;
+
     public class Category
     {
       
@@ -15,7 +17,7 @@
         [Required]
         [Comment("Name of the category.")]
         [StringLength(CategoryNameMaxLength, MinimumLength = CategoryNameMinLength, ErrorMessage = InvalidCategoryName)]
-        public string Name { get; set; } = null!;
+        public CategoryName Name { get; set; } = null!;
 
         [Required]
         [Comment("Description of the category.")]

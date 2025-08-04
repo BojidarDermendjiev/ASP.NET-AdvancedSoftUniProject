@@ -3,9 +3,10 @@
     using Microsoft.EntityFrameworkCore;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-
-    using static ErrorMessages.ErrorMessages;
+    
+    using ValueObjects;
     using static Constants.ProductValidationConstants;
+    using static ErrorMessages.ErrorMessages;
 
     public class Product
     {
@@ -16,7 +17,7 @@
         [Required]
         [Comment("Name of the product.")]
         [StringLength(ProductNameMaxLength, MinimumLength = ProductNameMinLength, ErrorMessage = InvalidProductName)]
-        public string Name { get; set; } = null!;
+        public ProductName Name { get; set; } = null!;
 
         [Required]
         [Comment("Type of the product (e.g., CPU, GPU, etc.).")]
@@ -44,7 +45,7 @@
         [Required]
         [Comment("Specifications of the product.")]
         [StringLength(ProductSpecsMaxLength, MinimumLength = ProductSpecsMinLength, ErrorMessage = InvalidProductSpecs)]
-        public string Specs { get; set; } = null!;
+        public ProductSpecs Specs { get; set; } = null!;
 
         [Required]
         [Comment("Image URL of the product.")]

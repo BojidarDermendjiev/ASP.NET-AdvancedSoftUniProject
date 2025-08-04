@@ -12,8 +12,8 @@ using ServerAspNetCoreAPIMakePC.Infrastructure.Data;
 namespace ServerAspNetCoreAPIMakePC.Migrations
 {
     [DbContext(typeof(MakePCDbContext))]
-    [Migration("20250726071541_InitialDb-MakePC")]
-    partial class InitialDbMakePC
+    [Migration("20250803182536_InitialDB")]
+    partial class InitialDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -133,8 +133,8 @@ namespace ServerAspNetCoreAPIMakePC.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
                         .HasComment("Name of the category.");
 
                     b.HasKey("Id");
@@ -157,18 +157,18 @@ namespace ServerAspNetCoreAPIMakePC.Migrations
 
                     b.Property<string>("PaymentStatus")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
                         .HasComment("The payment status of the order.");
 
                     b.Property<string>("ShippingAddress")
                         .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasComment("The shipping address for the order.");
 
                     b.Property<decimal>("TotalPrice")
-                        .HasColumnType("decimal(18,2)")
+                        .HasColumnType("decimal(18,4)")
                         .HasComment("The total price of the order.");
 
                     b.Property<Guid>("UserId")
@@ -204,7 +204,7 @@ namespace ServerAspNetCoreAPIMakePC.Migrations
                         .HasComment("The number of units of the product in the order item.");
 
                     b.Property<decimal>("UnitPrice")
-                        .HasColumnType("decimal(18,2)")
+                        .HasColumnType("decimal(18,4)")
                         .HasComment("The price per unit of the product in the order item.");
 
                     b.HasKey("Id");
@@ -282,13 +282,13 @@ namespace ServerAspNetCoreAPIMakePC.Migrations
                         .HasComment("Name of the product.");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)")
+                        .HasColumnType("decimal(18,4)")
                         .HasComment("Price of the product.");
 
                     b.Property<string>("Specs")
                         .IsRequired()
-                        .HasMaxLength(2000)
-                        .HasColumnType("nvarchar(2000)")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)")
                         .HasComment("Specifications of the product.");
 
                     b.Property<int>("Stock")
@@ -402,6 +402,11 @@ namespace ServerAspNetCoreAPIMakePC.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)")
                         .HasComment("Password hash for the user.");
+
+                    b.Property<byte[]>("PasswordSalt")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)")
+                        .HasComment("Salt used for hashing the user's password.");
 
                     b.Property<string>("Role")
                         .IsRequired()

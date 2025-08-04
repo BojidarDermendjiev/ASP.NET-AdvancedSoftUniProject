@@ -3,6 +3,7 @@
     using Microsoft.EntityFrameworkCore;
     using System.ComponentModel.DataAnnotations;
 
+    using ValueObjects;
     using static ErrorMessages.ErrorMessages;
     using static Constants.UserValidationConstants;
     public class User
@@ -15,7 +16,7 @@
         [Comment("Email address of the user.")]
         [StringLength(UserEmailMaxLength, MinimumLength = UserEmailMinLength)]
         [RegularExpression(UserEmailRegexPattern, ErrorMessage = InvalidEmail)]
-        public string Email { get; set; } = null!;
+        public Email Email { get; set; } = null!;
 
         [Required]
         [Comment("Password hash for the user.")]
@@ -36,7 +37,7 @@
         [Required]
         [Comment("Full name of the user.")]
         [StringLength(UserFullNameMaxLength, MinimumLength = UserFullNameMinLength , ErrorMessage = InvalidUserName)]
-        public string FullName { get; set; } = null!;
+        public FullName FullName { get; set; } = null!;
 
         [Required]
         [Comment("Role of the user in the system (e.g., Admin, User).")]

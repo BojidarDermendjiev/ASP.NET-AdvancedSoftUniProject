@@ -4,8 +4,9 @@
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    using static ErrorMessages.ErrorMessages;
+    using ValueObjects;
     using static Constants.OrderValidationConstants;
+    using static ErrorMessages.ErrorMessages;
 
     public class Order
     {
@@ -29,7 +30,7 @@
         [Required]
         [Comment("The shipping address for the order.")]
         [StringLength(OrderShippingAddressMaxLength, MinimumLength = OrderShippingAddressMinLength, ErrorMessage = InvalidShippingAddress)]
-        public string ShippingAddress { get; set; } = null!;
+        public ShippingAddress ShippingAddress { get; set; } = null!;
 
         [Required]
         [Comment("The payment status of the order.")]

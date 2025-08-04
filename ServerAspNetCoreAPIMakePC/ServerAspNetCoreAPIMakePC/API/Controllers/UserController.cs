@@ -1,10 +1,11 @@
 ﻿namespace ServerAspNetCoreAPIMakePC.API.Controllers
 {
     using Microsoft.AspNetCore.Authorization;
-
+    using Microsoft.AspNetCore.Mvc;
+    
+    using Domain.ValueObjects;
     using Application.DTOs.User;
     using Application.Interfaces;
-    using Microsoft.AspNetCore.Mvc;
     using static Domain.ErrorMessages.ErrorMessages;
 
     public class UserController : ControllerBase
@@ -43,9 +44,9 @@
         /// </summary>
         [AllowAnonymous]
         [HttpPost("authenticate")]
-        public async Task<ActionResult<UserDto>> Authenticate([FromBody] AuthenticateUserDto dto)
+        public async Task<ActionResult<UserDto?>> Authenticate([FromBody] AuthenticateUserDto dto)
         {
-            var user = await _userService.AuthenticateUserAsync(dto.Email, dto.Password);
+            var user = await _userService.AuthenticateUserAsync(new Email(dto.Email), dto.Password);
             if (user == null)
             {
                 return Unauthorized(new { error = "Invalid credentials." });

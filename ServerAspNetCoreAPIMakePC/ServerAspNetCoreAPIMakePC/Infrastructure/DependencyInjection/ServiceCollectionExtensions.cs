@@ -5,7 +5,9 @@
     using Microsoft.AspNetCore.Authentication.JwtBearer;
 
     using Services;
+    using External;
     using Repositories;
+    using API.Middleware;
     using Domain.Interfaces;
     using Application.Services;
     using Application.Interfaces;
@@ -23,7 +25,9 @@
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IJwtTokenService, JwtTokenService>();
             services.AddScoped<IShoppingCartService, ShoppingCartService>();
+            services.AddScoped<IPaymentGatewayService, PaymentGatewayService>();
             services.AddScoped<IPlatformFeedbackService, PlatformFeedbackService>();
+            services.AddHttpClient<IPaymentGatewayService, PaymentGatewayService>();
             return services;
         }
 
@@ -65,5 +69,22 @@
             services.AddAuthorization();
             return services;
         }
+        public static IApplicationBuilder UseMakePcMiddlewares(this IApplicationBuilder app)
+        {
+            app.UseMiddleware<ApiKeyAuthMiddleware>();
+            app.UseMiddleware<RequestLoggingMiddleware>();
+            app.UseMiddleware<GlobalExceptionMiddleware>();
+            app.UseMiddleware<RequireHttpsMiddleware>();
+            app.UseMiddleware<MaintenanceModeMiddleware>();
+            app.UseMiddleware<CorrelationIdMiddleware>();
+            app.UseMiddleware<RequestLoggingMiddleware>();
+            app.UseMiddleware<RateLimitingMiddleware>();
+            app.UseMiddleware<SecurityHeadersMiddleware>();
+            app.UseMiddleware<ErrorHandlingMiddleware>();
+            app.UseMiddleware<CustomHeaderMiddleware>();
+
+            return app;
+        }
+
     }
 }

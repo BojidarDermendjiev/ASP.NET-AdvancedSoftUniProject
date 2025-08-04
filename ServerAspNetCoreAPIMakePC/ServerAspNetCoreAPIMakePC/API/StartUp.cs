@@ -40,6 +40,10 @@ namespace ServerAspNetCoreAPIMakePC.API
 
             app.UseHttpsRedirection();
 
+            app.UseMakePcMiddlewares();
+
+            app.UseRouting();
+
             app.UseAuthentication();
             app.UseAuthorization();
 

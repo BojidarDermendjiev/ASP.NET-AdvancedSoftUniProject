@@ -22,6 +22,9 @@
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Apply configurations from the assembly
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(MakePCDbContext).Assembly);
+
             // Order
             modelBuilder.Entity<Order>()
                 .Property(o => o.TotalPrice)

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ServerAspNetCoreAPIMakePC.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialDbMakePC : Migration
+    public partial class InitialDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -32,7 +32,7 @@ namespace ServerAspNetCoreAPIMakePC.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false, comment: "Primary key for the Category entity.")
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, comment: "Name of the category."),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false, comment: "Name of the category."),
                     Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false, comment: "Description of the category.")
                 },
                 constraints: table =>
@@ -48,6 +48,7 @@ namespace ServerAspNetCoreAPIMakePC.Migrations
                     Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, comment: "Email address of the user."),
                     PasswordHash = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, comment: "Password hash for the user."),
                     ConfirmPassword = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    PasswordSalt = table.Column<byte[]>(type: "varbinary(max)", nullable: false, comment: "Salt used for hashing the user's password."),
                     FullName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, comment: "Full name of the user."),
                     Role = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false, comment: "Role of the user in the system (e.g., Admin, User).")
                 },
@@ -64,10 +65,10 @@ namespace ServerAspNetCoreAPIMakePC.Migrations
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, comment: "Name of the product."),
                     Type = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false, comment: "Type of the product (e.g., CPU, GPU, etc.)."),
                     BrandId = table.Column<int>(type: "int", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false, comment: "Price of the product."),
+                    Price = table.Column<decimal>(type: "decimal(18,4)", nullable: false, comment: "Price of the product."),
                     Stock = table.Column<int>(type: "int", nullable: false, comment: "Stock quantity of the product."),
                     Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false, comment: "Description of the product."),
-                    Specs = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: false, comment: "Specifications of the product."),
+                    Specs = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false, comment: "Specifications of the product."),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false, comment: "Image URL of the product."),
                     CategoryId = table.Column<int>(type: "int", nullable: false, comment: "Foreign key referencing the category of the product.")
                 },
@@ -116,9 +117,9 @@ namespace ServerAspNetCoreAPIMakePC.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, comment: "Identifier for the user who placed the order."),
                     OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "The date the order was placed."),
-                    ShippingAddress = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false, comment: "The shipping address for the order."),
-                    PaymentStatus = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false, comment: "The payment status of the order."),
-                    TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false, comment: "The total price of the order.")
+                    ShippingAddress = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false, comment: "The shipping address for the order."),
+                    PaymentStatus = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false, comment: "The payment status of the order."),
+                    TotalPrice = table.Column<decimal>(type: "decimal(18,4)", nullable: false, comment: "The total price of the order.")
                 },
                 constraints: table =>
                 {
@@ -209,7 +210,7 @@ namespace ServerAspNetCoreAPIMakePC.Migrations
                     OrderId = table.Column<int>(type: "int", nullable: false, comment: "Foreign key referencing the associated order."),
                     ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, comment: "Foreign key referencing the associated product."),
                     Quantity = table.Column<int>(type: "int", nullable: false, comment: "The number of units of the product in the order item."),
-                    UnitPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false, comment: "The price per unit of the product in the order item.")
+                    UnitPrice = table.Column<decimal>(type: "decimal(18,4)", nullable: false, comment: "The price per unit of the product in the order item.")
                 },
                 constraints: table =>
                 {

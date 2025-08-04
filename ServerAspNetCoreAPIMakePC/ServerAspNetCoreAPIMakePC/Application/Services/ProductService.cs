@@ -79,7 +79,7 @@
                 throw new KeyNotFoundException(string.Format(ProductNotFound));
             }
 
-            if (!string.IsNullOrWhiteSpace(dto.Name) && dto.Name != product.Name)
+            if (!string.IsNullOrWhiteSpace(dto.Name) && dto.Name != product.Name?.Value)
             {
                 var existing = await this._productRepository.GetByNameAsync(dto.Name);
                 if (existing != null && existing.Id != id)

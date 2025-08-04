@@ -1,6 +1,8 @@
 ﻿namespace ServerAspNetCoreAPIMakePC.Domain.Entities
 {
     using Microsoft.EntityFrameworkCore;
+    
+    using ValueObjects;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     public class OrderItem
@@ -29,7 +31,7 @@
 
         [Required]
         [Comment("The number of units of the product in the order item.")]
-        public int Quantity { get; set; }
+        public Quantity Quantity { get; set; } = null!;
 
         [Required]
         [Comment("The price per unit of the product in the order item.")]

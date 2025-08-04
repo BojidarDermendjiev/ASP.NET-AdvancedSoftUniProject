@@ -43,15 +43,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="API\Middleware\" />
-    <Folder Include="API\ModelBinders\" />
-    <Folder Include="API\Properties\" />
-    <Folder Include="Application\UseCases\" />
     <Folder Include="Domain\Enums\" />
-    <Folder Include="Domain\ValueObjects\" />
     <Folder Include="Infrastructure\Data\DbSeed\" />
-    <Folder Include="Infrastructure\External\" />
-    <Folder Include="Infrastructure\Models\" />
   </ItemGroup>
 
 </Project>

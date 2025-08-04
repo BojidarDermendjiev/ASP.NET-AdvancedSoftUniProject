@@ -78,5 +78,8 @@ namespace ServerAspNetCoreAPIMakePC.Domain.ErrorMessages
         public const string InvalidBasketNotFound = "Basket not found.";
         public const string BasketMismatch = "The provided basket ID does not match the expected value.";
         public const string InvalidBasketQuantity = "Quantity must be at least 1.";
+
+        // General error messages
+        public const string InvalidGuidFormat = "The provided ID is not a valid GUID format.";
     }
 }

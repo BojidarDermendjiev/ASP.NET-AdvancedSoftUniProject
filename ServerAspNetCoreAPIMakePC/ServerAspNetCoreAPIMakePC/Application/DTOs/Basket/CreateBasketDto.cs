@@ -15,5 +15,6 @@
         /// </summary>
         [Required]
         public ICollection<CreateBasketItemDto> Items { get; set; } = new List<CreateBasketItemDto>();
+
     }
 }

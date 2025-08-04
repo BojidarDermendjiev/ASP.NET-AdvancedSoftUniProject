@@ -21,7 +21,7 @@
             this._jwtAudience = configuration["Jwt:Audience"];
             this._jwtLifespanMinutes = int.TryParse(configuration["Jwt:LifespanMinutes"], out var lifespan) ? lifespan : 60;
         }
-        public string GenerateToken(string userId, string userName, IEnumerable<Claim> additionalClaims = null)
+        public string GenerateToken(string userId, string userName, IEnumerable<Claim>? additionalClaims = null)
         {
             var claims = new List<Claim>
             {

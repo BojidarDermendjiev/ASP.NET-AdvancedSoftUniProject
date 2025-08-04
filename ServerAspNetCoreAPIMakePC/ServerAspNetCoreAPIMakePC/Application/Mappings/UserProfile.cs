@@ -36,17 +36,6 @@
             CreateMap<BasketItem, BasketItem>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore());
             
-            CreateMap<AddBasketItemDto, ShoppingCart>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(_ => Guid.NewGuid()))
-                .ForMember(dest => dest.DateCreated, opt => opt.MapFrom(_ => DateTime.UtcNow))
-                .ForMember(dest => dest.Items, opt => opt.MapFrom(src => new List<BasketItem>
-                {
-                    new BasketItem
-                    {
-                        ProductId = src.ProductId,
-                        Quantity = src.Quantity
-                    }
-                }));
            
             CreateMap<AddBasketItemDto, BasketItem>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
