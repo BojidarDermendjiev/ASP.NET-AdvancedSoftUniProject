@@ -30,6 +30,8 @@ namespace ServerAspNetCoreAPIMakePC.API
 
             builder.Services.AddJwtAuthentication(builder.Configuration);
 
+            builder.Services.AddMakePcMiddlewares();
+
             var app = builder.Build();
 
             if (app.Environment.IsDevelopment())

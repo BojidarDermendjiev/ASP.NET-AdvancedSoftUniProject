@@ -69,20 +69,40 @@
             services.AddAuthorization();
             return services;
         }
+        public static IServiceCollection AddMakePcMiddlewares(this IServiceCollection services)
+        {
+            services.AddTransient<ApiKeyAuthMiddleware>();
+            services.AddTransient<RequireHttpsMiddleware>();
+            services.AddTransient<RateLimitingMiddleware>();
+            services.AddTransient<CustomHeaderMiddleware>();
+            services.AddTransient<CorrelationIdMiddleware>();
+            services.AddTransient<ErrorHandlingMiddleware>();
+            services.AddTransient<RequestLoggingMiddleware>();
+            services.AddTransient<RequestLoggingMiddleware>();
+            services.AddTransient<MaintenanceModeMiddleware>();
+            services.AddTransient<SecurityHeadersMiddleware>();
+            services.AddTransient<GlobalExceptionMiddleware>();
+            services.AddTransient<RoleAuthorizationMiddleware>();
+            services.AddTransient<AdminAuthorizationMiddleware>();
+            services.AddTransient<CustomerAuthorizationMiddleware>();
+            return services;
+        }
         public static IApplicationBuilder UseMakePcMiddlewares(this IApplicationBuilder app)
         {
             app.UseMiddleware<ApiKeyAuthMiddleware>();
-            app.UseMiddleware<RequestLoggingMiddleware>();
-            app.UseMiddleware<GlobalExceptionMiddleware>();
             app.UseMiddleware<RequireHttpsMiddleware>();
-            app.UseMiddleware<MaintenanceModeMiddleware>();
-            app.UseMiddleware<CorrelationIdMiddleware>();
-            app.UseMiddleware<RequestLoggingMiddleware>();
             app.UseMiddleware<RateLimitingMiddleware>();
-            app.UseMiddleware<SecurityHeadersMiddleware>();
-            app.UseMiddleware<ErrorHandlingMiddleware>();
             app.UseMiddleware<CustomHeaderMiddleware>();
-
+            app.UseMiddleware<CorrelationIdMiddleware>();
+            app.UseMiddleware<ErrorHandlingMiddleware>();
+            app.UseMiddleware<RequestLoggingMiddleware>();
+            app.UseMiddleware<RequestLoggingMiddleware>();
+            app.UseMiddleware<MaintenanceModeMiddleware>();
+            app.UseMiddleware<SecurityHeadersMiddleware>();
+            app.UseMiddleware<GlobalExceptionMiddleware>();
+            app.UseMiddleware<RoleAuthorizationMiddleware>();
+            app.UseMiddleware<AdminAuthorizationMiddleware>();
+            app.UseMiddleware<CustomerAuthorizationMiddleware>();
             return app;
         }
 
