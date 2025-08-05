@@ -3,6 +3,7 @@ namespace ServerAspNetCoreAPIMakePC.API
     using Microsoft.EntityFrameworkCore;
 
     using Application.Mappings;
+    using ModelBinders;
     using Infrastructure.Data;
     using Infrastructure.Data.DbSeed;
     using Infrastructure.DependencyInjection;
@@ -13,7 +14,10 @@ namespace ServerAspNetCoreAPIMakePC.API
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers(options =>
+            {
+                options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+            });
 
             builder.Services.AddDbContext<MakePCDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
