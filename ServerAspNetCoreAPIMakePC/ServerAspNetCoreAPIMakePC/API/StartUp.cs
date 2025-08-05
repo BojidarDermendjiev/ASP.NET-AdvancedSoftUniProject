@@ -2,8 +2,9 @@ namespace ServerAspNetCoreAPIMakePC.API
 {
     using Microsoft.EntityFrameworkCore;
 
-    using Infrastructure.Data;
     using Application.Mappings;
+    using Infrastructure.Data;
+    using Infrastructure.Data.DbSeed;
     using Infrastructure.DependencyInjection;
 
     public class StartUp
@@ -38,6 +39,12 @@ namespace ServerAspNetCoreAPIMakePC.API
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
+            }
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var db = scope.ServiceProvider.GetRequiredService<MakePCDbContext>();
+                DbSeed.Seed(db);
             }
 
             app.UseHttpsRedirection();
