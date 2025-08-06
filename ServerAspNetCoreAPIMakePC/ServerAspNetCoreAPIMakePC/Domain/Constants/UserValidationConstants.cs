@@ -18,5 +18,7 @@
 
         public const int UserConfirmPasswordMinLength = 8;
         public const int UserConfirmPasswordMaxLength = 100;
+
+        public const int SizeOfImg = 512;
     }
 }

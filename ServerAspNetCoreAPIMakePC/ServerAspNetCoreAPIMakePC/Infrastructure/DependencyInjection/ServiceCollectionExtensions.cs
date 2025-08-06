@@ -71,13 +71,10 @@
         }
         public static IServiceCollection AddMakePcMiddlewares(this IServiceCollection services)
         {
-            services.AddTransient<ApiKeyAuthMiddleware>();
-            services.AddTransient<RequireHttpsMiddleware>();
             services.AddTransient<RateLimitingMiddleware>();
             services.AddTransient<CustomHeaderMiddleware>();
             services.AddTransient<CorrelationIdMiddleware>();
             services.AddTransient<ErrorHandlingMiddleware>();
-            services.AddTransient<RequestLoggingMiddleware>();
             services.AddTransient<RequestLoggingMiddleware>();
             services.AddTransient<MaintenanceModeMiddleware>();
             services.AddTransient<SecurityHeadersMiddleware>();
@@ -89,13 +86,10 @@
         }
         public static IApplicationBuilder UseMakePcMiddlewares(this IApplicationBuilder app)
         {
-            app.UseMiddleware<ApiKeyAuthMiddleware>();
-            app.UseMiddleware<RequireHttpsMiddleware>();
             app.UseMiddleware<RateLimitingMiddleware>();
             app.UseMiddleware<CustomHeaderMiddleware>();
             app.UseMiddleware<CorrelationIdMiddleware>();
             app.UseMiddleware<ErrorHandlingMiddleware>();
-            app.UseMiddleware<RequestLoggingMiddleware>();
             app.UseMiddleware<RequestLoggingMiddleware>();
             app.UseMiddleware<MaintenanceModeMiddleware>();
             app.UseMiddleware<SecurityHeadersMiddleware>();

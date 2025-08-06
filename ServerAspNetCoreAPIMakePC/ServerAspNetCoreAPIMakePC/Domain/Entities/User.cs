@@ -44,6 +44,13 @@
         [StringLength(UserRoleMaxLength, MinimumLength = UserRoleMinLength , ErrorMessage = InvalidUserRole)]
         public string Role { get; set; } = null!;
 
+        [Comment("Avatar image for the user, stored as byte array.")]
+        public byte[]? AvatarImage { get; set; }
+
+        [Comment("URL or file path to the user's avatar image.")]
+        [StringLength(SizeOfImg)]
+        public string? AvatarUrl { get; set; }
+
         [Required]
         [Comment("Navigation property to the shopping cart associated with the user.")]
         public ShoppingCart ShoppingCart { get; set; } = null!;

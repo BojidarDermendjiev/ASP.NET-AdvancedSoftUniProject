@@ -6,8 +6,10 @@
     {
         public static List<Product> GetDesktopProducts(List<Brand> brands, List<Category> categories)
         {
-            Brand Brand(string name) => brands.First(b => b.Name.Value == name);
-            Category Category(string name) => categories.First(c => c.Name.Value == name);
+            Brand Brand(string name) => brands.FirstOrDefault(b => b.Name.Value == name)
+                                        ?? throw new InvalidOperationException($"Brand '{name}' not found in seed list.");
+            Category Category(string name) => categories.FirstOrDefault(c => c.Name.Value == name)
+                                              ?? throw new InvalidOperationException($"Category '{name}' not found in seed list.");
 
             return new List<Product>
             {

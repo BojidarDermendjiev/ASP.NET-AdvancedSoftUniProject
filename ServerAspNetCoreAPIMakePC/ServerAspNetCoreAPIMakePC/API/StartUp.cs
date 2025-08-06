@@ -35,7 +35,7 @@ namespace ServerAspNetCoreAPIMakePC.API
 
             builder.Services.AddJwtAuthentication(builder.Configuration);
 
-            builder.Services.AddMakePcMiddlewares();
+            //builder.Services.AddMakePcMiddlewares();
 
             var app = builder.Build();
 
@@ -48,6 +48,7 @@ namespace ServerAspNetCoreAPIMakePC.API
             using (var scope = app.Services.CreateScope())
             {
                 var db = scope.ServiceProvider.GetRequiredService<MakePCDbContext>();
+                db.Database.Migrate();
                 DbSeed.Seed(db);
             }
 
