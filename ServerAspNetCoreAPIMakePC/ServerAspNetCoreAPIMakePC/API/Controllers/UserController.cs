@@ -1,7 +1,7 @@
 ﻿namespace ServerAspNetCoreAPIMakePC.API.Controllers
 {
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Authorization;
     
     using Domain.ValueObjects;
     using Application.DTOs.User;

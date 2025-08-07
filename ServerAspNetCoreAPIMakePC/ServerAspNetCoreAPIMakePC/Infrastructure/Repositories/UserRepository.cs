@@ -1,12 +1,11 @@
-﻿using ServerAspNetCoreAPIMakePC.Domain.ValueObjects;
-
-namespace ServerAspNetCoreAPIMakePC.Infrastructure.Repositories
+﻿namespace ServerAspNetCoreAPIMakePC.Infrastructure.Repositories
 {
     using Microsoft.EntityFrameworkCore;
 
     using Data;
     using Domain.Entities;
     using Domain.Interfaces;
+    using Domain.ValueObjects;
     using static Domain.ErrorMessages.ErrorMessages;
 
     /// <summary>

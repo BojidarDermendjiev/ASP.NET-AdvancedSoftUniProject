@@ -1,12 +1,18 @@
 namespace ServerAspNetCoreAPIMakePC.API
 {
+    using System.Text;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.IdentityModel.Tokens;
+    using Microsoft.AspNetCore.Diagnostics;
+    using Microsoft.AspNetCore.Authentication.Cookies;
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
 
-    using Application.Mappings;
     using ModelBinders;
     using Infrastructure.Data;
+    using Application.Mappings;
     using Infrastructure.Data.DbSeed;
     using Infrastructure.DependencyInjection;
+  
 
     public class StartUp
     {
@@ -23,6 +29,7 @@ namespace ServerAspNetCoreAPIMakePC.API
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             builder.Services.AddApplicationServices();
+
             builder.Services.AddRepositories();
 
             builder.Services.AddMemoryCache();
@@ -35,7 +42,53 @@ namespace ServerAspNetCoreAPIMakePC.API
 
             builder.Services.AddJwtAuthentication(builder.Configuration);
 
-            //builder.Services.AddMakePcMiddlewares();
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", policy =>
+                {
+                    policy.AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
+
+            builder.Services.AddResponseCaching();
+
+            builder.Services.AddAuthentication(options =>
+                {
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                        ValidAudience = builder.Configuration["Jwt:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(
+                            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Secret"]))
+                    };
+                })
+                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme) 
+                .AddGoogle(googleOptions =>
+                {
+                    googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+                    googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+                })
+                .AddMicrosoftAccount(microsoftOptions =>
+                {
+                    microsoftOptions.ClientId = builder.Configuration["Authentication:Microsoft:ClientId"];
+                    microsoftOptions.ClientSecret = builder.Configuration["Authentication:Microsoft:ClientSecret"];
+                })
+                .AddFacebook(facebookOptions =>
+                {
+                    facebookOptions.AppId = builder.Configuration["Authentication:Facebook:AppId"];
+                    facebookOptions.AppSecret = builder.Configuration["Authentication:Facebook:AppSecret"];
+                });
 
             var app = builder.Build();
 
@@ -54,7 +107,48 @@ namespace ServerAspNetCoreAPIMakePC.API
 
             app.UseHttpsRedirection();
 
+            app.UseCors("AllowAll");
+
             app.UseMakePcMiddlewares();
+
+            app.UseExceptionHandler(appError =>
+            {
+                appError.Run(async context =>
+                {
+                    context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                    context.Response.ContentType = "application/json";
+
+                    var errorFeature = context.Features.Get<IExceptionHandlerFeature>();
+                    var error = errorFeature?.Error;
+
+                    var response = new
+                    {
+                        status = context.Response.StatusCode,
+                        message = "An unexpected error occurred.",
+                        detail = app.Environment.IsDevelopment() ? error?.Message : null
+                    };
+
+                    await context.Response.WriteAsJsonAsync(response);
+                });
+            });
+
+            app.UseStatusCodePages(async context =>
+            {
+                var statusCode = context.HttpContext.Response.StatusCode;
+                context.HttpContext.Response.ContentType = "application/json";
+                await context.HttpContext.Response.WriteAsJsonAsync(new
+                {
+                    status = statusCode,
+                    message = statusCode switch
+                    {
+                        StatusCodes.Status404NotFound => "Resource not found.",
+                        StatusCodes.Status403Forbidden => "Access forbidden.",
+                        _ => "An error occurred."
+                    }
+                });
+            });
+
+            app.UseResponseCaching();
 
             app.UseRouting();
 
