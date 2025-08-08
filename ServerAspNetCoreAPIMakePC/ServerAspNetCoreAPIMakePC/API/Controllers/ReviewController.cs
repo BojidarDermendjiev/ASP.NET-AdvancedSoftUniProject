@@ -1,5 +1,7 @@
 ﻿namespace ServerAspNetCoreAPIMakePC.API.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
+
     using Application.Interfaces;
     using Application.DTOs.Review;
     using Microsoft.AspNetCore.Mvc;
@@ -20,6 +22,7 @@
         /// Gets all reviews.
         /// </summary>
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult> GetAll()
         {
             var reviews = await this._reviewService.GetAllAsync();
@@ -35,6 +38,7 @@
         /// Gets a review by its id.
         /// </summary>
         [HttpGet("{id:int}")]
+        [AllowAnonymous]
         public async Task<ActionResult> GetById(int id)
         {
             var review = await this._reviewService.GetByIdAsync(id);
@@ -50,6 +54,7 @@
         /// Gets all reviews for a specific product.
         /// </summary>
         [HttpGet("product/{productId:guid}")]
+        [Authorize]
         public async Task<ActionResult> GetByProductId(Guid productId)
         {
             var reviews = await this._reviewService.GetByProductIdAsync(productId);
@@ -79,17 +84,18 @@
         /// <summary>
         /// Creates a new review.
         /// </summary>
-        [HttpPut("{id:int}")]
-        public async Task<ActionResult> Create(int id, [FromBody] CreateReviewDto review)
+        [HttpPost]
+        [Authorize]
+        public async Task<ActionResult> Create([FromBody] CreateReviewDto review)
         {
             if (review is null)
             {
                 return BadRequest(string.Format(ReviewInvalid));
             }
-
-            if (review.Id != id)
+        
+            if (!ModelState.IsValid)
             {
-                return BadRequest(string.Format(ReviewIdMismatch));
+                return BadRequest(ModelState);
             }
 
             var createdReview = await this._reviewService.CreateAsync(review);
@@ -100,6 +106,7 @@
         /// Updates an existing review.
         /// </summary>
         [HttpPut("{id:int}")]
+        [Authorize]
         public async Task<IActionResult> Update(int id, [FromBody] UpdateReviewDto dto)
         {
             if (dto.Id != id)
@@ -134,6 +141,7 @@
         /// Deletes a review by its id.
         /// </summary>
         [HttpDelete("{id:int}")]
+        [Authorize]
         public async Task<ActionResult> Delete(int id)
         {
             try

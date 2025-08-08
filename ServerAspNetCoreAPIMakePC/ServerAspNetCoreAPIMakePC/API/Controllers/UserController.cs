@@ -2,12 +2,14 @@
 {
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Authorization;
-    
+
     using Domain.ValueObjects;
     using Application.DTOs.User;
     using Application.Interfaces;
     using static Domain.ErrorMessages.ErrorMessages;
 
+    [ApiController]
+    [Route("api/user")]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;

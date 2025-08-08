@@ -1,18 +1,16 @@
+using ServerAspNetCoreAPIMakePC.API.Middleware;
+
 namespace ServerAspNetCoreAPIMakePC.API
 {
-    using System.Text;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.IdentityModel.Tokens;
-    using Microsoft.AspNetCore.Diagnostics;
-    using Microsoft.AspNetCore.Authentication.Cookies;
-    using Microsoft.AspNetCore.Authentication.JwtBearer;
-
-    using ModelBinders;
     using Infrastructure.Data;
-    using Application.Mappings;
     using Infrastructure.Data.DbSeed;
     using Infrastructure.DependencyInjection;
-  
+    using Microsoft.AspNetCore.Authentication.Cookies;
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
+    using Microsoft.AspNetCore.Diagnostics;
+    using Microsoft.EntityFrameworkCore;
+    using ModelBinders;
+
 
     public class StartUp
     {
@@ -38,7 +36,7 @@ namespace ServerAspNetCoreAPIMakePC.API
 
             builder.Services.AddSwaggerGen();
 
-            builder.Services.AddAutoMapper(typeof(UserProfile).Assembly);
+            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             builder.Services.AddJwtAuthentication(builder.Configuration);
 
@@ -59,21 +57,8 @@ namespace ServerAspNetCoreAPIMakePC.API
                     options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
                     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
                 })
-                .AddJwtBearer(options =>
-                {
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true,
-                        ValidIssuer = builder.Configuration["Jwt:Issuer"],
-                        ValidAudience = builder.Configuration["Jwt:Audience"],
-                        IssuerSigningKey = new SymmetricSecurityKey(
-                            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Secret"]))
-                    };
-                })
-                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme) 
+
+                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddGoogle(googleOptions =>
                 {
                     googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
@@ -109,7 +94,6 @@ namespace ServerAspNetCoreAPIMakePC.API
 
             app.UseCors("AllowAll");
 
-            app.UseMakePcMiddlewares();
 
             app.UseExceptionHandler(appError =>
             {
@@ -150,10 +134,14 @@ namespace ServerAspNetCoreAPIMakePC.API
 
             app.UseResponseCaching();
 
+            app.UseStaticFiles();
+
             app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseMakePcMiddlewares();
 
             app.MapControllers();
 

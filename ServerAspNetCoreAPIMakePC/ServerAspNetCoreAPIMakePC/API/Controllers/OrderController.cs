@@ -1,6 +1,7 @@
 ﻿namespace ServerAspNetCoreAPIMakePC.API.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Authorization;
 
     using Application.Interfaces;
     using Application.DTOs.Order;
@@ -8,6 +9,7 @@
 
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize] 
     public class OrderController : ControllerBase
     {
         private readonly IOrderService _orderService;

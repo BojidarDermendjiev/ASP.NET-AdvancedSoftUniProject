@@ -1,13 +1,15 @@
 ﻿namespace ServerAspNetCoreAPIMakePC.API.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
-    
+    using Microsoft.AspNetCore.Authorization;
+
     using Application.DTOs.Brand;
     using Application.Interfaces;
     using static Domain.ErrorMessages.ErrorMessages;
 
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class BrandController : ControllerBase
     {
         private readonly IBrandService _brandService;
@@ -21,6 +23,8 @@
         /// Retrieves all brands.
         /// GET /api/brand
         /// </summary>
+
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -33,6 +37,7 @@
         /// Retrieves a specific brand by its ID.
         /// GET /api/brand/{id}
         /// </summary>
+
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById(int id)
         {

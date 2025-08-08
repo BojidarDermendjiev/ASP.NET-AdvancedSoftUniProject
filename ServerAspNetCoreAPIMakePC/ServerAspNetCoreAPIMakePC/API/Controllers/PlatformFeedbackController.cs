@@ -1,11 +1,14 @@
 ﻿namespace ServerAspNetCoreAPIMakePC.API.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
-    
+    using Microsoft.AspNetCore.Authorization;
+
     using Application.Interfaces;
     using Application.DTOs.Feedback;
     using static Domain.ErrorMessages.ErrorMessages;
 
+    [ApiController]
+    [Route("api/[controller]")]
     public class PlatformFeedbackController : ControllerBase
     {
         private readonly IPlatformFeedbackService _platformFeedbackService;
@@ -21,6 +24,7 @@
         /// GET /api/platformfeedback
         /// </summary>
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAll()
         {
             var feedbacks = await this._platformFeedbackService.GetAllAsync();
@@ -32,6 +36,7 @@
         /// GET /api/platformfeedback/{id}
         /// </summary>
         [HttpGet("{id:int}")]
+        [Authorize]
         public async Task<IActionResult> GetById(int id)
         {
             var feedback = await this._platformFeedbackService.GetByIdAsync(id);
@@ -47,6 +52,7 @@
         /// GET /api/platformfeedback/user/{userId}
         /// </summary>
         [HttpGet("user/{userId:guid}")]
+        [Authorize]
         public async Task<IActionResult> GetByUserId(Guid userId)
         {
             var feedbacks = await this._platformFeedbackService.GetByUserIdAsync(userId);
@@ -62,6 +68,7 @@
         /// POST /api/platformfeedback
         /// </summary>
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Create([FromBody] CreatePlatformFeedbackDto dto)
         {
             if (!ModelState.IsValid)
@@ -79,6 +86,7 @@
         /// PUT /api/platformfeedback/{id}
         /// </summary>
         [HttpPut("{id:int}")]
+        [Authorize]
         public async Task<IActionResult> Update(int id, [FromBody] UpdatePlatformFeedbackDto dto)
         {
             if (id != dto.Id)
@@ -103,6 +111,7 @@
         /// DELETE /api/platformfeedback/{id}
         /// </summary>
         [HttpDelete("{id:int}")]
+        [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
             try

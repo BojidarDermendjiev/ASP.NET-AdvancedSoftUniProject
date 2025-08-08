@@ -69,21 +69,6 @@
             services.AddAuthorization();
             return services;
         }
-        public static IServiceCollection AddMakePcMiddlewares(this IServiceCollection services)
-        {
-            services.AddTransient<RateLimitingMiddleware>();
-            services.AddTransient<CustomHeaderMiddleware>();
-            services.AddTransient<CorrelationIdMiddleware>();
-            services.AddTransient<ErrorHandlingMiddleware>();
-            services.AddTransient<RequestLoggingMiddleware>();
-            services.AddTransient<MaintenanceModeMiddleware>();
-            services.AddTransient<SecurityHeadersMiddleware>();
-            services.AddTransient<GlobalExceptionMiddleware>();
-            services.AddTransient<RoleAuthorizationMiddleware>();
-            services.AddTransient<AdminAuthorizationMiddleware>();
-            services.AddTransient<CustomerAuthorizationMiddleware>();
-            return services;
-        }
         public static IApplicationBuilder UseMakePcMiddlewares(this IApplicationBuilder app)
         {
             app.UseMiddleware<RateLimitingMiddleware>();

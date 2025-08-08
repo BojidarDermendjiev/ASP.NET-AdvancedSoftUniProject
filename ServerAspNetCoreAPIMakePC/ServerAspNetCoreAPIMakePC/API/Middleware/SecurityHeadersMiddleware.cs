@@ -17,7 +17,7 @@
                 context.Response.Headers["X-Frame-Options"] = "DENY";
                 context.Response.Headers["X-XSS-Protection"] = "1; mode=block";
                 context.Response.Headers["Referrer-Policy"] = "strict-origin-when-cross-origin";
-                context.Response.Headers["Content-Security-Policy"] = "default-src 'self';";
+                context.Response.Headers["Content-Security-Policy"] = "default-src 'self'; style-src 'self' 'unsafe-inline';";
                 context.Response.Headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains";
                 return Task.CompletedTask;
             });

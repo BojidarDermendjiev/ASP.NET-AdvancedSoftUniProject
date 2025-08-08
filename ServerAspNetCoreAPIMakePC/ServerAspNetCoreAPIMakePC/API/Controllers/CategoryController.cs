@@ -1,13 +1,15 @@
 ﻿namespace ServerAspNetCoreAPIMakePC.API.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
-    
+    using Microsoft.AspNetCore.Authorization;
+
     using Application.Interfaces;
     using Application.DTOs.Category;
     using static Domain.ErrorMessages.ErrorMessages;
 
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class CategoryController : ControllerBase
     {
         private readonly ICategoryService _categoryService;

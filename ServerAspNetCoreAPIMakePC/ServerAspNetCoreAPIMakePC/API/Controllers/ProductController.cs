@@ -1,6 +1,7 @@
 ﻿namespace ServerAspNetCoreAPIMakePC.API.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Authorization;
 
     using Domain.Entities;
     using Application.Interfaces;
@@ -8,6 +9,7 @@
 
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize] 
     public class ProductController : ControllerBase
     {
         private readonly IProductService  _productService;
@@ -59,10 +61,12 @@
             }
           
         }
+     
         /// <summary>
         /// Updates an existing product.
         /// PUT /api/product/{id}
         /// </summary>
+        [HttpPut("{id}")]
         public async Task<ActionResult<Product>> Update(Guid id, [FromBody] UpdateProductDto dto)
         {
             try
