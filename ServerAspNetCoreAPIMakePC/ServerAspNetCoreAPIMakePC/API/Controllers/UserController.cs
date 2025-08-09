@@ -46,14 +46,15 @@
         /// </summary>
         [AllowAnonymous]
         [HttpPost("authenticate")]
-        public async Task<ActionResult<UserDto?>> Authenticate([FromBody] AuthenticateUserDto dto)
+        public async Task<IActionResult> Authenticate([FromBody] AuthenticateUserDto dto)
         {
             var user = await _userService.AuthenticateUserAsync(new Email(dto.Email), dto.Password);
             if (user == null)
             {
                 return Unauthorized(new { error = "Invalid credentials." });
             }
-            return Ok(user);
+            var token = _userService.GenerateJwtToken(user);
+            return Ok(new { token, user });
         }
 
         /// <summary>

@@ -1,7 +1,14 @@
 ﻿namespace ServerAspNetCoreAPIMakePC.Application.Services
 {
     using AutoMapper;
+    using System.Text;
+    using System.Security.Claims;
+    using Microsoft.Extensions.Options;
+    using System.IdentityModel.Tokens.Jwt;
+    using Microsoft.IdentityModel.Tokens;
 
+
+    using Settings;
     using DTOs.User;
     using Utilities;
     using Interfaces;
@@ -20,16 +27,18 @@
     {
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
+        private readonly JwtSettings _jwtSettings;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UserService"/> class.
         /// </summary>
         /// <param name="userRepository">Repository for user-related database operations.</param>
         /// <param name="mapper">AutoMapper instance for DTO-entity mapping.</param>
-        public UserService(IUserRepository userRepository, IMapper mapper)
+        public UserService(IUserRepository userRepository, IMapper mapper, IOptions<JwtSettings> jwtOptions)
         {
             this._userRepository = userRepository;
             this._mapper = mapper;
+            this._jwtSettings = jwtOptions.Value;
         }
 
         /// <summary>
@@ -180,6 +189,30 @@
             user.PasswordSalt = passwordSalt;
 
             await _userRepository.UpdateAsync(user);
+        }
+
+        public string GenerateJwtToken(UserDto userDto)
+        {
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Secret));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var claims = new List<Claim>
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, userDto.Id.ToString()),
+                new Claim(JwtRegisteredClaimNames.Email, userDto.Email),
+                new Claim(ClaimTypes.Name, userDto.FullName ?? ""),
+                // new Claim(ClaimTypes.Role, userDto.Role)
+            };
+
+            var token = new JwtSecurityToken(
+                issuer: _jwtSettings.Issuer,
+                audience: _jwtSettings.Audience,
+                claims: claims,
+                expires: DateTime.UtcNow.AddMinutes(_jwtSettings.LifespanMinutes),
+                signingCredentials: creds
+            );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
 }

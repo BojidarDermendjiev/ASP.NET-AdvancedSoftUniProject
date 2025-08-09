@@ -12,5 +12,6 @@
         Task UpdateUserAsync(Guid userId, UpdateUserDto dto);
         Task DeleteUserAsync(Guid id);
         Task ChangePasswordAsync(Guid id, string newPassword);
+        string GenerateJwtToken(UserDto userDto);
     }
 }

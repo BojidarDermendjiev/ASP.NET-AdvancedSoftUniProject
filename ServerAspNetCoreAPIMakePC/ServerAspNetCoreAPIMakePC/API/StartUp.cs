@@ -1,16 +1,15 @@
-using ServerAspNetCoreAPIMakePC.API.Middleware;
-
 namespace ServerAspNetCoreAPIMakePC.API
 {
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.AspNetCore.Diagnostics;
+    using Microsoft.AspNetCore.Authentication.Cookies;
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
+
+    using ModelBinders;
+    using Application.Settings;
     using Infrastructure.Data;
     using Infrastructure.Data.DbSeed;
     using Infrastructure.DependencyInjection;
-    using Microsoft.AspNetCore.Authentication.Cookies;
-    using Microsoft.AspNetCore.Authentication.JwtBearer;
-    using Microsoft.AspNetCore.Diagnostics;
-    using Microsoft.EntityFrameworkCore;
-    using ModelBinders;
-
 
     public class StartUp
     {
@@ -38,6 +37,8 @@ namespace ServerAspNetCoreAPIMakePC.API
 
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+            builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
+
             builder.Services.AddJwtAuthentication(builder.Configuration);
 
             builder.Services.AddCors(options =>
@@ -53,27 +54,26 @@ namespace ServerAspNetCoreAPIMakePC.API
             builder.Services.AddResponseCaching();
 
             builder.Services.AddAuthentication(options =>
-                {
-                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                })
-
-                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddGoogle(googleOptions =>
-                {
-                    googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
-                    googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
-                })
-                .AddMicrosoftAccount(microsoftOptions =>
-                {
-                    microsoftOptions.ClientId = builder.Configuration["Authentication:Microsoft:ClientId"];
-                    microsoftOptions.ClientSecret = builder.Configuration["Authentication:Microsoft:ClientSecret"];
-                })
-                .AddFacebook(facebookOptions =>
-                {
-                    facebookOptions.AppId = builder.Configuration["Authentication:Facebook:AppId"];
-                    facebookOptions.AppSecret = builder.Configuration["Authentication:Facebook:AppSecret"];
-                });
+            {
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddGoogle(googleOptions =>
+            {
+                googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+                googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+            })
+            .AddMicrosoftAccount(microsoftOptions =>
+            {
+                microsoftOptions.ClientId = builder.Configuration["Authentication:Microsoft:ClientId"];
+                microsoftOptions.ClientSecret = builder.Configuration["Authentication:Microsoft:ClientSecret"];
+            })
+            .AddFacebook(facebookOptions =>
+            {
+                facebookOptions.AppId = builder.Configuration["Authentication:Facebook:AppId"];
+                facebookOptions.AppSecret = builder.Configuration["Authentication:Facebook:AppSecret"];
+            });
 
             var app = builder.Build();
 
