@@ -77,5 +77,13 @@
             this._context.Users.Remove(user);
             await this._context.SaveChangesAsync();
         }
+
+        /// <summary>
+        /// Retrieves all users from the database.
+        /// </summary>
+        public async Task<List<User>> GetAllAsync()
+        {
+            return await this._context.Users.ToListAsync();
+        }
     }
 }

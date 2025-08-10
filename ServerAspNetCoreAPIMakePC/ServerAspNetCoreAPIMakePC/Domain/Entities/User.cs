@@ -3,6 +3,7 @@
     using Microsoft.EntityFrameworkCore;
     using System.ComponentModel.DataAnnotations;
 
+    using Enums;
     using ValueObjects;
     using static ErrorMessages.ErrorMessages;
     using static Constants.UserValidationConstants;
@@ -42,7 +43,7 @@
         [Required]
         [Comment("Role of the user in the system (e.g., Admin, User).")]
         [StringLength(UserRoleMaxLength, MinimumLength = UserRoleMinLength , ErrorMessage = InvalidUserRole)]
-        public string Role { get; set; } = null!;
+        public UserRole Role { get; set; } 
 
         [Comment("Avatar image for the user, stored as byte array.")]
         public byte[]? AvatarImage { get; set; }

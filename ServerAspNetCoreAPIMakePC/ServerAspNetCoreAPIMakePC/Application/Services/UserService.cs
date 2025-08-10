@@ -1,4 +1,6 @@
-﻿namespace ServerAspNetCoreAPIMakePC.Application.Services
+﻿using ServerAspNetCoreAPIMakePC.Domain.Enums;
+
+namespace ServerAspNetCoreAPIMakePC.Application.Services
 {
     using AutoMapper;
     using System.Text;
@@ -213,6 +215,22 @@
             );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        public async Task<IEnumerable<UserDto>> GetClientsAsync()
+        {
+            var users = await this._userRepository.GetAllAsync();
+
+            var clients = users.Where(u => u.Role == UserRole.User) 
+                .Select(u => new UserDto
+                {
+                    Id = u.Id,
+                    Email = u.Email.Value,
+                    FullName = u.FullName.Value,
+                    Role = u.Role.ToString()
+                });
+
+            return clients;
         }
     }
 }

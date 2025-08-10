@@ -135,5 +135,17 @@
                 return BadRequest(new { error = ex.Message });
             }
         }
+
+        /// <summary>
+        /// Get all users (or clients).
+        /// GET /api/user/clients
+        /// </summary>
+        [Authorize(Roles = "Admin")]
+        [HttpGet("clients")]
+        public async Task<IActionResult> GetClients()
+        {
+            var clients = await _userService.GetClientsAsync(); 
+            return Ok(clients);
+        }
     }
 }

@@ -1,9 +1,8 @@
 ﻿namespace ServerAspNetCoreAPIMakePC.Application.Mappings
 {
     using AutoMapper;
-
-    using DTOs.Order;
     using DTOs.User;
+    using DTOs.Order;
     using DTOs.Brand;
     using DTOs.Basket;
     using DTOs.Review;
@@ -11,6 +10,8 @@
     using DTOs.Feedback;
     using Domain.Entities;
     using DTOs.ShoppingCart;
+    using ServerAspNetCoreAPIMakePC.Domain.Enums;
+    using ServerAspNetCoreAPIMakePC.Domain.ValueObjects;
     using Utilities;
 
     public class UserProfile : Profile
@@ -18,16 +19,27 @@
         public UserProfile()
         {
             CreateMap<User, UserDto>();
-            
+
             CreateMap<RegisterUserDto, User>()
                 .ForMember(dest => dest.PasswordHash, opt => opt.Ignore())
                 .ForMember(dest => dest.PasswordSalt, opt => opt.Ignore())
-                .ForMember(dest => dest.Role, opt => opt.MapFrom(src => "User"))
+                .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => new FullName(src.FullName)))
+                .ForMember(dest => dest.Role, opt => opt.MapFrom(src => UserRole.User))
                 .AfterMap((src, dest) =>
                 {
                     byte[] salt;
                     dest.PasswordHash = PasswordHasher.HashPassword(src.Password, out salt);
-                    dest.PasswordSalt = salt;
+                    dest.PasswordSalt = salt; CreateMap<RegisterUserDto, User>()
+                        .ForMember(dest => dest.PasswordHash, opt => opt.Ignore())
+                        .ForMember(dest => dest.PasswordSalt, opt => opt.Ignore())
+                        .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => new FullName(src.FullName)))
+                        .ForMember(dest => dest.Role, opt => opt.MapFrom(src => UserRole.User))
+                        .AfterMap((src, dest) =>
+                        {
+                            byte[] salt;
+                            dest.PasswordHash = PasswordHasher.HashPassword(src.Password, out salt);
+                            dest.PasswordSalt = salt;
+                        });
                 });
 
             CreateMap<UpdateUserDto, User>()
