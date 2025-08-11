@@ -15,6 +15,7 @@
     public class PlatformFeedbackService : IPlatformFeedbackService
     {
         private readonly IPlatformFeedbackRepository _repository;
+        private readonly IUserService _userService;
         private readonly IMapper _mapper;
 
         /// <summary>
@@ -22,9 +23,10 @@
         /// </summary>
         /// <param name="repository">Repository for platform feedback data operations.</param>
         /// <param name="mapper">AutoMapper instance for mapping entities and DTOs.</param>
-        public PlatformFeedbackService(IPlatformFeedbackRepository repository, IMapper mapper)
+        public PlatformFeedbackService(IPlatformFeedbackRepository repository, IMapper mapper, IUserService userService)
         {
             this._repository = repository;
+            this._userService = userService;
             this._mapper = mapper;
         }
 
@@ -36,7 +38,13 @@
         public async Task<PlatformFeedbackDto?> GetByIdAsync(int id)
         {
             var feedback = await this._repository.GetByIdAsync(id);
-            return feedback is null ? null : this._mapper.Map<PlatformFeedbackDto>(feedback);
+            if (feedback is null) return null;
+            var dto = this._mapper.Map<PlatformFeedbackDto>(feedback);
+
+            var user = await _userService.GetUserByIdAsync(feedback.UserId);
+            dto.UserName = user!.FullName ?? user.Email;
+
+            return dto;
         }
 
         /// <summary>
@@ -46,7 +54,15 @@
         public async Task<IEnumerable<PlatformFeedbackDto>> GetAllAsync()
         {
             var feedbacks = await this._repository.GetAllAsync();
-            return feedbacks.Select(feedback => this._mapper.Map<PlatformFeedbackDto>(feedback));
+            var dtos = new List<PlatformFeedbackDto>();
+            foreach (var feedback in feedbacks)
+            {
+                var dto = this._mapper.Map<PlatformFeedbackDto>(feedback);
+                var user = await _userService.GetUserByIdAsync(feedback.UserId);
+                dto.UserName = user!.FullName ?? user.Email;
+                dtos.Add(dto);
+            }
+            return dtos;
         }
 
         /// <summary>
@@ -57,7 +73,14 @@
         public async Task<IEnumerable<PlatformFeedbackDto>> GetByUserIdAsync(Guid userId)
         {
             var feedbacks = await this._repository.GetByUserIdAsync(userId);
-            return feedbacks.Select(feedback => this._mapper.Map<PlatformFeedbackDto>(feedback));
+            var user = await _userService.GetUserByIdAsync(userId);
+            var dtos = feedbacks.Select(feedback =>
+            {
+                var dto = this._mapper.Map<PlatformFeedbackDto>(feedback);
+                dto.UserName = user!.FullName ?? user.Email;
+                return dto;
+            });
+            return dtos;
         }
 
 
@@ -71,7 +94,14 @@
             var feedback = this._mapper.Map<Domain.Entities.PlatformFeedback>(dto);
             feedback.DateGiven = DateTime.UtcNow;
             await this._repository.AddAsync(feedback);
-            return this._mapper.Map<PlatformFeedbackDto>(feedback);
+
+            var created = this._mapper.Map<PlatformFeedbackDto>(feedback);
+
+            // Fetch username after creation
+            var user = await _userService.GetUserByIdAsync(feedback.UserId);
+            created.UserName = user!.FullName ?? user.Email;
+
+            return created;
         }
 
         /// <summary>
@@ -89,7 +119,12 @@
             }
             this._mapper.Map(dto, existingFeedback);
             await this._repository.UpdateAsync(existingFeedback);
-            return this._mapper.Map<PlatformFeedbackDto>(existingFeedback);
+
+            var updated = this._mapper.Map<PlatformFeedbackDto>(existingFeedback);
+            var user = await this._userService.GetUserByIdAsync(existingFeedback.UserId);
+            updated.UserName = user!.FullName ?? user.Email;
+
+            return updated;
         }
 
         /// <summary>
