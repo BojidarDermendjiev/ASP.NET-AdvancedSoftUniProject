@@ -1,11 +1,11 @@
 ﻿namespace ServerAspNetCoreAPIMakePC.API.Controllers
 {
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Authorization;
-
-    using Domain.ValueObjects;
     using Application.DTOs.User;
     using Application.Interfaces;
+    using Domain.ValueObjects;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using ServerAspNetCoreAPIMakePC.Domain.Entities;
     using static Domain.ErrorMessages.ErrorMessages;
 
     [ApiController]
@@ -28,8 +28,13 @@
         {
             try
             {
-                await this._userService.RegisterUserAsync(userRegistrationDto);
-                return Ok(new { Message = "User registered successfully." });
+                var user = await this._userService.RegisterUserAsync(userRegistrationDto);
+                var token = _userService.GenerateJwtToken(user);
+                return Ok(new
+                {
+                    user,
+                    token
+                });
             }
             catch (InvalidOperationException ex)
             {
@@ -119,7 +124,7 @@
         {
             try
             {
-                await this._userService.ChangePasswordAsync(id, dto.NewPassword);
+                await this._userService.ChangePasswordAsync(id, dto.OldPassword, dto.NewPassword);
                 return Ok(new { Message = UserPasswordChangeSuccessfully });
             }
             catch (KeyNotFoundException ex)
@@ -128,12 +133,37 @@
             }
             catch (InvalidOperationException ex)
             {
-                return NotFound(new { error = ex.Message });
+                return BadRequest(new { error = ex.Message });
             }
             catch (ArgumentException ex)
             {
                 return BadRequest(new { error = ex.Message });
             }
+        }
+
+        /// <summary>
+        /// Upload or update user avatar.
+        /// PUT /api/user/{id}/avatar
+        /// </summary>
+        [Authorize]
+        [HttpPut("{id}/avatar")]
+        public async Task<IActionResult> UploadAvatar(Guid id)
+        {
+            if (!Request.HasFormContentType || !Request.Form.Files.Any())
+                return BadRequest(new { error = "No file uploaded." });
+
+            var file = Request.Form.Files[0];
+            if (file.Length == 0)
+                return BadRequest(new { error = "Uploaded file is empty." });
+
+            using var ms = new MemoryStream();
+            await file.CopyToAsync(ms);
+            var avatarBytes = ms.ToArray();
+            var fileName = file.FileName;
+
+            await _userService.UpdateAvatarAsync(id, avatarBytes, fileName);
+
+            return Ok(new { message = "Avatar updated successfully." });
         }
 
         /// <summary>
@@ -144,7 +174,7 @@
         [HttpGet("clients")]
         public async Task<IActionResult> GetClients()
         {
-            var clients = await _userService.GetClientsAsync(); 
+            var clients = await _userService.GetClientsAsync();
             return Ok(clients);
         }
     }

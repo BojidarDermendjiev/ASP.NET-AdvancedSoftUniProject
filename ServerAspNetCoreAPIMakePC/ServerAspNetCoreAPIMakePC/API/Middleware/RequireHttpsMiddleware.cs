@@ -8,7 +8,7 @@
 
         public RequireHttpsMiddleware(RequestDelegate next)
         {
-            _next = next;
+            this._next = next;
         }
 
         public async Task InvokeAsync(HttpContext context)

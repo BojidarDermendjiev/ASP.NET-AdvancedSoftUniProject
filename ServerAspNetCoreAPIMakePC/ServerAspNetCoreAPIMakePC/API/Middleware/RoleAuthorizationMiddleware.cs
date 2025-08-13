@@ -10,8 +10,8 @@
 
         public RoleAuthorizationMiddleware(RequestDelegate next, ILogger<RoleAuthorizationMiddleware> logger)
         {
-            _next = next;
-            _logger = logger;
+            this._next = next;
+            this._logger = logger;
         }
 
         public async Task InvokeAsync(HttpContext context, IUserService userService)
@@ -22,30 +22,30 @@
 
                 if (endpoint == null || endpoint.Metadata.GetMetadata<IAllowAnonymous>() != null)
                 {
-                    await _next(context);
+                    await this._next(context);
                     return;
                 }
 
                 if (context.Request.Path.StartsWithSegments("/favicon.ico") ||
                     context.Request.Path.StartsWithSegments("/.well-known"))
                 {
-                    await _next(context);
+                    await this._next(context);
                     return;
                 }
 
                 if (!context.User.Identity.IsAuthenticated)
                 {
-                    _logger.LogWarning("Unauthorized access attempt to {Path}", context.Request.Path);
+                    this._logger.LogWarning("Unauthorized access attempt to {Path}", context.Request.Path);
                     context.Response.StatusCode = StatusCodes.Status401Unauthorized;
                     await context.Response.WriteAsync("Unauthorized");
                     return;
                 }
 
-                await _next(context);
+                await this._next(context);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error in RoleAuthorizationMiddleware for path {Path}", context.Request.Path);
+                this._logger.LogError(ex, "Error in RoleAuthorizationMiddleware for path {Path}", context.Request.Path);
                 context.Response.StatusCode = StatusCodes.Status500InternalServerError;
                 await context.Response.WriteAsync("Internal server error");
             }

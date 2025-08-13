@@ -49,7 +49,7 @@ namespace ServerAspNetCoreAPIMakePC.Application.Services
         /// <param name="dto">The user registration data.</param>
         /// <exception cref="InvalidOperationException">Thrown if the email is already registered or passwords do not match.</exception>
         /// <exception cref="ArgumentException">Thrown if the passwords are empty.</exception>
-        public async Task RegisterUserAsync(RegisterUserDto dto)
+        public async Task<UserDto> RegisterUserAsync(RegisterUserDto dto)
         {
             var existingUser = await this._userRepository.GetByEmailAsync(new Email(dto.Email));
             if (existingUser != null)
@@ -75,6 +75,10 @@ namespace ServerAspNetCoreAPIMakePC.Application.Services
             user.PasswordSalt = passwordSalt;
 
             await _userRepository.AddAsync(user);
+
+            // Map back to UserDto to return (fetch from DB if needed)
+            var userDto = _mapper.Map<UserDto>(user);
+            return userDto;
         }
 
         /// <summary>
@@ -176,13 +180,16 @@ namespace ServerAspNetCoreAPIMakePC.Application.Services
         /// <param name="id">The user's unique identifier.</param>
         /// <param name="newPassword">The new password.</param>
         /// <exception cref="KeyNotFoundException">Thrown if the user does not exist.</exception>
-        public async Task ChangePasswordAsync(Guid id, string newPassword)
+        public async Task ChangePasswordAsync(Guid id, string oldPassword, string newPassword)
         {
             var user = await _userRepository.GetByIdAsync(id);
             if (user is null)
-            {
                 throw new KeyNotFoundException(string.Format(UserNotFoundById, id));
-            }
+
+            // Verify old password
+            bool verified = PasswordHasher.VerifyPassword(oldPassword, user.PasswordHash, user.PasswordSalt);
+            if (!verified)
+                throw new InvalidOperationException("Current password is incorrect.");
 
             byte[] passwordSalt;
             string passwordHash = PasswordHasher.HashPassword(newPassword, out passwordSalt);
@@ -231,6 +238,20 @@ namespace ServerAspNetCoreAPIMakePC.Application.Services
                 });
 
             return clients;
+        }
+
+        public async Task UpdateAvatarAsync(Guid userId, byte[] avatarImage, string? fileName = null)
+        {
+            var user = await this._userRepository.GetByIdAsync(userId);
+            if (user == null)
+                throw new Exception($"User not found: {userId}");
+
+            user.AvatarImage = avatarImage;
+            if (fileName != null)
+            {
+                user.AvatarUrl = $"/uploads/avatars/{userId}/{fileName}";
+            }
+            await _userRepository.UpdateAsync(user);
         }
     }
 }

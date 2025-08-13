@@ -71,6 +71,7 @@
         }
         public static IApplicationBuilder UseMakePcMiddlewares(this IApplicationBuilder app)
         {
+            app.UseMiddleware<ApiKeyMiddleware>();
             app.UseMiddleware<RateLimitingMiddleware>();
             app.UseMiddleware<CustomHeaderMiddleware>();
             app.UseMiddleware<CorrelationIdMiddleware>();

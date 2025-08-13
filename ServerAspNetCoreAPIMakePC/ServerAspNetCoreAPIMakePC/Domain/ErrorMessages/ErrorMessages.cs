@@ -1,7 +1,4 @@
-﻿using NUnit.Framework;
-using ServerAspNetCoreAPIMakePC.Domain.Entities;
-
-namespace ServerAspNetCoreAPIMakePC.Domain.ErrorMessages
+﻿namespace ServerAspNetCoreAPIMakePC.Domain.ErrorMessages
 {
     public class ErrorMessages
     {

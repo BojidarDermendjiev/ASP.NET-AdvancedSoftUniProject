@@ -9,8 +9,8 @@
 
         public CustomerAuthorizationMiddleware(RequestDelegate next, ILogger<CustomerAuthorizationMiddleware> logger)
         {
-            _next = next;
-            _logger = logger;
+            this._next = next;
+            this._logger = logger;
         }
 
         public async Task InvokeAsync(HttpContext context)
@@ -20,14 +20,14 @@
                 // Check if this is a customer-protected endpoint
                 if (!IsCustomerProtectedEndpoint(context.Request.Path))
                 {
-                    await _next(context);
+                    await this._next(context);
                     return;
                 }
 
                 // Check if user is authenticated
                 if (!context.User.Identity.IsAuthenticated)
                 {
-                    _logger.LogWarning("Unauthenticated access attempt to customer area: {Path}", context.Request.Path);
+                    this._logger.LogWarning("Unauthenticated access attempt to customer area: {Path}", context.Request.Path);
                     await RedirectToLogin(context);
                     return;
                 }
@@ -35,7 +35,7 @@
                 // Get user role from context (set by RoleAuthorizationMiddleware)
                 if (!context.Items.TryGetValue("UserRole", out var roleObj) || roleObj is not UserRole userRole)
                 {
-                    _logger.LogWarning("No user role found in context for customer area access: {Path}", context.Request.Path);
+                    this._logger.LogWarning("No user role found in context for customer area access: {Path}", context.Request.Path);
                     await HandleUnauthorized(context);
                     return;
                 }
@@ -45,7 +45,7 @@
                 // Check if user has customer access (customers and admins can access customer areas)
                 if (!HasCustomerAccess(userRole))
                 {
-                    _logger.LogWarning("User {UserId} with role {Role} attempted to access customer area: {Path}",
+                    this._logger.LogWarning("User {UserId} with role {Role} attempted to access customer area: {Path}",
                         userId, userRole, context.Request.Path);
                     await HandleForbidden(context);
                     return;
@@ -56,7 +56,7 @@
                 {
                     if (!await ValidateResourceOwnership(context, userId))
                     {
-                        _logger.LogWarning("User {UserId} attempted to access resource they don't own: {Path}",
+                        this._logger.LogWarning("User {UserId} attempted to access resource they don't own: {Path}",
                             userId, context.Request.Path);
                         await HandleForbidden(context);
                         return;
@@ -68,21 +68,21 @@
                 {
                     if (userRole != UserRole.User && userRole != UserRole.Admin && userRole != UserRole.Admin)
                     {
-                        _logger.LogWarning("User {UserId} with role {Role} attempted shopping cart operation: {Path}",
+                        this._logger.LogWarning("User {UserId} with role {Role} attempted shopping cart operation: {Path}",
                             userId, userRole, context.Request.Path);
                         await HandleForbidden(context);
                         return;
                     }
                 }
 
-                _logger.LogDebug("Customer access granted to user {UserId} with role {Role} for {Path}",
+                this._logger.LogDebug("Customer access granted to user {UserId} with role {Role} for {Path}",
                     userId, userRole, context.Request.Path);
 
                 await _next(context);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error in CustomerAuthorizationMiddleware for path {Path}", context.Request.Path);
+                this._logger.LogError(ex, "Error in CustomerAuthorizationMiddleware for path {Path}", context.Request.Path);
                 context.Response.StatusCode = StatusCodes.Status500InternalServerError;
                 await context.Response.WriteAsync("Internal server error");
             }

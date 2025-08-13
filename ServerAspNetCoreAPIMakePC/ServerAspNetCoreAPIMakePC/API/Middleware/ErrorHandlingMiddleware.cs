@@ -13,19 +13,19 @@
 
         public ErrorHandlingMiddleware(RequestDelegate next, ILogger<ErrorHandlingMiddleware> logger)
         {
-            _next = next;
-            _logger = logger;
+            this._next = next;
+            this._logger = logger;
         }
 
         public async Task InvokeAsync(HttpContext context)
         {
             try
             {
-                await _next(context);
+                await this._next(context);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Unhandled exception");
+                this._logger.LogError(ex, "Unhandled exception");
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                 context.Response.ContentType = "application/json";
 
