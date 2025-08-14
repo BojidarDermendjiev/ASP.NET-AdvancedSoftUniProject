@@ -21,7 +21,7 @@
         /// Initializes a new instance of the <see cref="CategoryService"/> class.
         /// </summary>
         /// <param name="categoryRepository">The repository for category data operations.</param>
-        /// <param name="mapper">AutoMapper instance for mapping between entities and DTOs.</param>
+        /// <param name="mapper">AutoMapper instance for mapping between entities and DTOsa.</param>
         public CategoryService(ICategoryRepository categoryRepository, IMapper mapper)
         {
             this._categoryRepository = categoryRepository;

@@ -13,6 +13,7 @@
     using Application.Settings;
     using Application.Interfaces;
     using Application.DTOs.Product;
+
     [TestFixture]
     public class ProductServiceTests
     {
@@ -33,9 +34,9 @@
         {
             var id = Guid.NewGuid();
             var product = new Product { Id = id };
-            _productRepositoryMock.Setup(r => r.GetByIdAsync(id)).ReturnsAsync(product);
+            this._productRepositoryMock.Setup(r => r.GetByIdAsync(id)).ReturnsAsync(product);
 
-            var result = await _productService.GetProductByIdAsync(id);
+            var result = await this._productService.GetProductByIdAsync(id);
 
             Assert.AreEqual(product, result);
         }
@@ -44,9 +45,9 @@
         public async Task GetProductByIdAsync_ReturnsNull_IfNotExists()
         {
             var id = Guid.NewGuid();
-            _productRepositoryMock.Setup(r => r.GetByIdAsync(id)).ReturnsAsync((Product)null);
+            this._productRepositoryMock.Setup(r => r.GetByIdAsync(id)).ReturnsAsync((Product)null);
 
-            var result = await _productService.GetProductByIdAsync(id);
+            var result = await this._productService.GetProductByIdAsync(id);
 
             Assert.IsNull(result);
         }
@@ -57,9 +58,9 @@
             var dto = new CreateProductDto { Name = "Laptop" };
             var existing = new Product();
 
-            _productRepositoryMock.Setup(r => r.GetByNameAsync(dto.Name)).ReturnsAsync(existing);
+            this._productRepositoryMock.Setup(r => r.GetByNameAsync(dto.Name)).ReturnsAsync(existing);
 
-            var ex = Assert.ThrowsAsync<InvalidOperationException>(async () => await _productService.CreateProductAsync(dto));
+            var ex = Assert.ThrowsAsync<InvalidOperationException>(async () => await this._productService.CreateProductAsync(dto));
             Assert.That(ex.Message, Does.Contain(dto.Name));
         }
 
@@ -69,15 +70,15 @@
             var dto = new CreateProductDto { Name = "Laptop" };
             var product = new Product();
 
-            _productRepositoryMock.Setup(r => r.GetByNameAsync(dto.Name)).ReturnsAsync((Product)null);
-            _mapperMock.Setup(m => m.Map<Product>(dto)).Returns(product);
-            _productRepositoryMock.Setup(r => r.AddAsync(product)).Returns(Task.CompletedTask);
+            this._productRepositoryMock.Setup(r => r.GetByNameAsync(dto.Name)).ReturnsAsync((Product)null);
+            this._mapperMock.Setup(m => m.Map<Product>(dto)).Returns(product);
+            this._productRepositoryMock.Setup(r => r.AddAsync(product)).Returns(Task.CompletedTask);
 
-            var result = await _productService.CreateProductAsync(dto);
+            var result = await this._productService.CreateProductAsync(dto);
 
             Assert.IsNotNull(result);
             Assert.AreEqual(product, result);
-            _productRepositoryMock.Verify(r => r.AddAsync(product), Times.Once);
+            this._productRepositoryMock.Verify(r => r.AddAsync(product), Times.Once);
         }
 
         [Test]
@@ -86,9 +87,9 @@
             var id = Guid.NewGuid();
             var dto = new UpdateProductDto();
 
-            _productRepositoryMock.Setup(r => r.GetByIdAsync(id)).ReturnsAsync((Product)null);
+            this._productRepositoryMock.Setup(r => r.GetByIdAsync(id)).ReturnsAsync((Product)null);
 
-            Assert.ThrowsAsync<KeyNotFoundException>(async () => await _productService.UpdateProductAsync(id, dto));
+            Assert.ThrowsAsync<KeyNotFoundException>(async () => await this._productService.UpdateProductAsync(id, dto));
         }
 
         [Test]
@@ -99,10 +100,10 @@
             var dto = new UpdateProductDto { Name = "New" };
             var existing = new Product { Id = Guid.NewGuid(), Name = new ServerAspNetCoreAPIMakePC.Domain.ValueObjects.ProductName("New") };
 
-            _productRepositoryMock.Setup(r => r.GetByIdAsync(id)).ReturnsAsync(oldProduct);
-            _productRepositoryMock.Setup(r => r.GetByNameAsync(dto.Name)).ReturnsAsync(existing);
+            this._productRepositoryMock.Setup(r => r.GetByIdAsync(id)).ReturnsAsync(oldProduct);
+            this._productRepositoryMock.Setup(r => r.GetByNameAsync(dto.Name)).ReturnsAsync(existing);
 
-            Assert.ThrowsAsync<InvalidOperationException>(async () => await _productService.UpdateProductAsync(id, dto));
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await this._productService.UpdateProductAsync(id, dto));
         }
 
         [Test]
@@ -112,24 +113,24 @@
             var oldProduct = new Product { Id = id, Name = new ServerAspNetCoreAPIMakePC.Domain.ValueObjects.ProductName("Old") };
             var dto = new UpdateProductDto { Name = "Old" };
 
-            _productRepositoryMock.Setup(r => r.GetByIdAsync(id)).ReturnsAsync(oldProduct);
-            _mapperMock.Setup(m => m.Map(dto, oldProduct));
-            _productRepositoryMock.Setup(r => r.UpdateAsync(oldProduct)).Returns(Task.CompletedTask);
+            this._productRepositoryMock.Setup(r => r.GetByIdAsync(id)).ReturnsAsync(oldProduct);
+            this._mapperMock.Setup(m => m.Map(dto, oldProduct));
+            this._productRepositoryMock.Setup(r => r.UpdateAsync(oldProduct)).Returns(Task.CompletedTask);
 
-            var result = await _productService.UpdateProductAsync(id, dto);
+            var result = await this._productService.UpdateProductAsync(id, dto);
 
             Assert.AreEqual(oldProduct, result);
-            _productRepositoryMock.Verify(r => r.UpdateAsync(oldProduct), Times.Once);
+            this._productRepositoryMock.Verify(r => r.UpdateAsync(oldProduct), Times.Once);
         }
 
         [Test]
         public async Task DeleteProductAsync_Throws_IfNotFound()
         {
             var id = Guid.NewGuid();
-            _productRepositoryMock.Setup(r => r.GetByIdAsync(id)).ReturnsAsync((Product)null);
+            this._productRepositoryMock.Setup(r => r.GetByIdAsync(id)).ReturnsAsync((Product)null);
 
-            Assert.ThrowsAsync<KeyNotFoundException>(async () => await _productService.DeleteProductAsync(id));
-        }
+            Assert.ThrowsAsync<KeyNotFoundException>(async () => await this._productService.DeleteProductAsync(id));
+        }       
 
         [Test]
         public async Task DeleteProductAsync_Deletes_IfFound()
@@ -137,21 +138,21 @@
             var id = Guid.NewGuid();
             var product = new Product { Id = id };
 
-            _productRepositoryMock.Setup(r => r.GetByIdAsync(id)).ReturnsAsync(product);
-            _productRepositoryMock.Setup(r => r.DeleteAsync(id)).Returns(Task.CompletedTask);
+            this._productRepositoryMock.Setup(r => r.GetByIdAsync(id)).ReturnsAsync(product);
+            this._productRepositoryMock.Setup(r => r.DeleteAsync(id)).Returns(Task.CompletedTask);
 
-            await _productService.DeleteProductAsync(id);
+            await this._productService.DeleteProductAsync(id);
 
-            _productRepositoryMock.Verify(r => r.DeleteAsync(id), Times.Once);
+            this._productRepositoryMock.Verify(r => r.DeleteAsync(id), Times.Once);
         }
 
         [Test]
         public async Task GetAllProductsAsync_ReturnsAll()
         {
             var products = new List<Product> { new Product(), new Product() };
-            _productRepositoryMock.Setup(r => r.GetAllAsync()).ReturnsAsync(products);
+            this._productRepositoryMock.Setup(r => r.GetAllAsync()).ReturnsAsync(products);
 
-            var result = await _productService.GetAllProductsAsync();
+            var result = await this.    _productService.GetAllProductsAsync();
 
             Assert.AreEqual(products, result);
         }
@@ -161,9 +162,9 @@
         {
             var name = "Laptop";
             var product = new Product();
-            _productRepositoryMock.Setup(r => r.GetByNameAsync(name)).ReturnsAsync(product);
+            this._productRepositoryMock.Setup(r => r.GetByNameAsync(name)).ReturnsAsync(product);
 
-            var result = await _productService.ProductExistsAsync(name);
+            var result = await this._productService.ProductExistsAsync(name);
 
             Assert.IsTrue(result);
         }
@@ -172,9 +173,9 @@
         public async Task ProductExistsAsync_ReturnsFalse_IfNotExists()
         {
             var name = "Laptop";
-            _productRepositoryMock.Setup(r => r.GetByNameAsync(name)).ReturnsAsync((Product)null);
+            this._productRepositoryMock.Setup(r => r.GetByNameAsync(name)).ReturnsAsync((Product)null);
 
-            var result = await _productService.ProductExistsAsync(name);
+            var result = await this._productService.ProductExistsAsync(name);
 
             Assert.IsFalse(result);
         }
@@ -184,9 +185,9 @@
         {
             var query = "laptop";
             var products = new List<Product> { new Product(), new Product() };
-            _productRepositoryMock.Setup(r => r.SearchAsync(query)).ReturnsAsync(products);
+            this._productRepositoryMock.Setup(r => r.SearchAsync(query)).ReturnsAsync(products);
 
-            var result = await _productService.SearchProductsAsync(query);
+            var result = await this._productService.SearchProductsAsync(query);
 
             Assert.AreEqual(products, result);
         }
@@ -196,9 +197,9 @@
         {
             int page = 1, pageSize = 2, total = 5;
             var products = new List<Product> { new Product(), new Product() };
-            _productRepositoryMock.Setup(r => r.GetPagesAsync(page, pageSize)).ReturnsAsync((products, total));
+            this._productRepositoryMock.Setup(r => r.GetPagesAsync(page, pageSize)).ReturnsAsync((products, total));
 
-            var (result, count) = await _productService.GetProductsPagedAsync(page, pageSize);
+            var (result, count) = await this._productService.GetProductsPagedAsync(page, pageSize);
 
             Assert.AreEqual(products, result);
             Assert.AreEqual(total, count);
