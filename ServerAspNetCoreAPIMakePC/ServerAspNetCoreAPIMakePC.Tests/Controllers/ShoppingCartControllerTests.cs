@@ -10,8 +10,8 @@
 
     using API.Controllers;
     using Domain.Entities;
-    using Application.Interfaces;
-    using Application.DTOs.ShoppingCart;
+    using ServerAspNetCoreAPIMakePC.Application.Interfaces;
+    using ServerAspNetCoreAPIMakePC.Application.DTOs.ShoppingCart;
 
     [TestFixture]
     public class ShoppingCartControllerTests

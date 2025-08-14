@@ -9,10 +9,9 @@
     using Domain.Entities;
     using Domain.Interfaces;
     using Domain.ValueObjects;
-    using Application.Services;
-    using Application.Settings;
-    using Application.Interfaces;
     using Application.DTOs.Review;
+    using ServerAspNetCoreAPIMakePC.Application.Services;
+    using ServerAspNetCoreAPIMakePC.Application.DTOs.Review;
 
     [TestFixture]
     public class ReviewServiceTests

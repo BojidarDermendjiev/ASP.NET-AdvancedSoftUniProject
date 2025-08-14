@@ -12,8 +12,8 @@
     using NUnit.Framework;
 
     using API.Controllers;
-    using Application.DTOs.User;
-    using Application.Interfaces;
+    using ServerAspNetCoreAPIMakePC.Application.DTOs.User;
+    using ServerAspNetCoreAPIMakePC.Application.Interfaces;
 
     [TestFixture]
     public class UserControllerTests

@@ -10,8 +10,8 @@
 
     using API.Controllers;
     using Domain.Entities;
-    using Application.Interfaces;
-    using Application.DTOs.Product;
+    using ServerAspNetCoreAPIMakePC.Application.Interfaces;
+    using ServerAspNetCoreAPIMakePC.Application.DTOs.Product;
 
     [TestFixture]
     public class ProductControllerTests

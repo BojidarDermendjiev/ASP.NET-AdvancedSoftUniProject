@@ -10,9 +10,9 @@
 
     using API.Controllers;
     using Domain.Entities;
-    using Application.Interfaces;
-    using Application.DTOs.Order;
-    
+    using ServerAspNetCoreAPIMakePC.Application.Interfaces;
+    using ServerAspNetCoreAPIMakePC.Application.DTOs.Order;
+
     [TestFixture]
     public class OrderControllerTests
     {

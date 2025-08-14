@@ -10,8 +10,9 @@
 
     using API.Controllers;
     using Domain.Entities;
-    using Application.Interfaces;
     using Application.DTOs.Basket;
+    using ServerAspNetCoreAPIMakePC.Application.Interfaces;
+    using ServerAspNetCoreAPIMakePC.Application.DTOs.Basket;
 
     [TestFixture]
     public class BasketControllerTests

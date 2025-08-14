@@ -9,10 +9,9 @@
     using Domain.Entities;
     using Domain.Interfaces;
     using Domain.ValueObjects;
-    using Application.Services;
-    using Application.Settings;
     using Application.DTOs.User;
-    using Application.Interfaces;
+    using ServerAspNetCoreAPIMakePC.Application.Settings;
+    using ServerAspNetCoreAPIMakePC.Application.Services;
 
     [TestFixture]
     public class UserServiceTests

@@ -9,10 +9,9 @@
     using Domain.Entities;
     using Domain.Interfaces;
     using Domain.ValueObjects;
-    using Application.Services;
-    using Application.Settings;
-    using Application.Interfaces;
     using Application.DTOs.Order;
+    using ServerAspNetCoreAPIMakePC.Application.Services;
+    using ServerAspNetCoreAPIMakePC.Application.DTOs.Order;
 
     [TestFixture]
     public class OrderServiceTests

@@ -10,8 +10,8 @@
 
     using API.Controllers;
     using Domain.Entities;
-    using Application.Interfaces;
-    using Application.DTOs.Review;
+    using ServerAspNetCoreAPIMakePC.Application.Interfaces;
+    using ServerAspNetCoreAPIMakePC.Application.DTOs.Review;
 
     [TestFixture]
     public class ReviewControllerTests

@@ -9,10 +9,11 @@
     using Domain.Entities;
     using Domain.Interfaces;
     using Domain.ValueObjects;
-    using Application.Services;
-    using Application.Settings;
-    using Application.Interfaces;
     using Application.DTOs.Feedback;
+    using ServerAspNetCoreAPIMakePC.Application.Services;
+    using ServerAspNetCoreAPIMakePC.Application.DTOs.User;
+    using ServerAspNetCoreAPIMakePC.Application.Interfaces;
+    using ServerAspNetCoreAPIMakePC.Application.DTOs.Feedback;
 
     [TestFixture]
     public class PlatformFeedbackServiceTests
@@ -40,7 +41,7 @@
         {
             var feedback = new PlatformFeedback { Id = 1, UserId = Guid.NewGuid() };
             var feedbackDto = new PlatformFeedbackDto { Id = 1 };
-            var userDto = new Application.DTOs.User.UserDto { FullName = "Test User", Email = "test@email.com" };
+            var userDto = new UserDto { FullName = "Test User", Email = "test@email.com" };
 
             this._feedbackRepositoryMock.Setup(r => r.GetByIdAsync(1)).ReturnsAsync(feedback);
             this._mapperMock.Setup(m => m.Map<PlatformFeedbackDto>(feedback)).Returns(feedbackDto);
@@ -77,7 +78,7 @@
                 new PlatformFeedbackDto { Id = 1 },
                 new PlatformFeedbackDto { Id = 2 }
             };
-            var userDto = new Application.DTOs.User.UserDto { FullName = "User Name", Email = "u@email.com" };
+            var userDto = new UserDto { FullName = "User Name", Email = "u@email.com" };
 
             this._feedbackRepositoryMock.Setup(r => r.GetAllAsync()).ReturnsAsync(feedbacks);
             this._mapperMock.Setup(m => m.Map<PlatformFeedbackDto>(It.IsAny<PlatformFeedback>()))
@@ -98,7 +99,7 @@
             {
                 new PlatformFeedback { Id = 1, UserId = userId }
             };
-            var userDto = new Application.DTOs.User.UserDto { FullName = "Name", Email = "e@mail.com" };
+            var userDto = new UserDto { FullName = "Name", Email = "e@mail.com" };
 
             this._feedbackRepositoryMock.Setup(r => r.GetByUserIdAsync(userId)).ReturnsAsync(feedbacks);
             this._mapperMock.Setup(m => m.Map<PlatformFeedbackDto>(It.IsAny<PlatformFeedback>()))
@@ -117,7 +118,7 @@
             var createDto = new CreatePlatformFeedbackDto();
             var feedback = new PlatformFeedback { UserId = Guid.NewGuid() };
             var feedbackDto = new PlatformFeedbackDto();
-            var userDto = new Application.DTOs.User.UserDto { FullName = "Test Name", Email = "test@e.com" };
+            var userDto = new UserDto { FullName = "Test Name", Email = "test@e.com" };
 
             this._mapperMock.Setup(m => m.Map<PlatformFeedback>(createDto)).Returns(feedback);
             this._feedbackRepositoryMock.Setup(r => r.AddAsync(feedback)).Returns(Task.CompletedTask);
@@ -145,7 +146,7 @@
             var updateDto = new UpdatePlatformFeedbackDto { Id = 2 };
             var feedback = new PlatformFeedback { Id = 2, UserId = Guid.NewGuid() };
             var feedbackDto = new PlatformFeedbackDto { Id = 2 };
-            var userDto = new Application.DTOs.User.UserDto { FullName = "Upd Name", Email = "upd@e.com" };
+            var userDto = new UserDto { FullName = "Upd Name", Email = "upd@e.com" };
 
             this._feedbackRepositoryMock.Setup(r => r.GetByIdAsync(updateDto.Id)).ReturnsAsync(feedback);
             this._mapperMock.Setup(m => m.Map(updateDto, feedback));

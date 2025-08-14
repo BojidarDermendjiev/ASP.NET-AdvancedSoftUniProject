@@ -12,7 +12,7 @@
     using Moq;
    
     using API.Middleware;
-    using Application.Interfaces;
+    using ServerAspNetCoreAPIMakePC.Application.Interfaces;
 
     [TestFixture]
     public class RoleAuthorizationMiddlewareTests

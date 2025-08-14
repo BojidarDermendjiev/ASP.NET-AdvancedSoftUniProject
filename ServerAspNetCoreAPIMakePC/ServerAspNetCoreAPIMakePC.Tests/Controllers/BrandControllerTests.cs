@@ -10,8 +10,8 @@
 
     using API.Controllers;
     using Domain.Entities;
-    using Application.Interfaces;
-    using Application.DTOs.Brand;
+    using ServerAspNetCoreAPIMakePC.Application.Interfaces;
+    using ServerAspNetCoreAPIMakePC.Application.DTOs.Brand;
 
     [TestFixture]
     public class BrandControllerTests
@@ -19,7 +19,6 @@
         private Mock<IBrandService> _brandServiceMock;
         private BrandController _controller;
 
-        // Adjust this error message to match your static error message if needed
         private const string IdMismatchUserFriendly = "Id mismatch.";
 
         [SetUp]

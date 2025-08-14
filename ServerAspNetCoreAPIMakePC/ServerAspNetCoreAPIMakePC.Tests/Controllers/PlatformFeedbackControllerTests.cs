@@ -10,8 +10,8 @@
 
     using API.Controllers;
     using Domain.Entities;
-    using Application.Interfaces;
-    using Application.DTOs.Feedback;
+    using ServerAspNetCoreAPIMakePC.Application.Interfaces;
+    using ServerAspNetCoreAPIMakePC.Application.DTOs.Feedback;
 
     [TestFixture]
     public class PlatformFeedbackControllerTests
